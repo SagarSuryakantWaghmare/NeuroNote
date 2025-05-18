@@ -84,6 +84,7 @@ app.get("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(
     const content = yield db_1.ContentModel.find({
         userId: userId
     }).populate("userId", "username");
+    // It is used to get the specific data from the given 
     res.json({
         content
     });

@@ -83,6 +83,22 @@ app.get("/api/v1/content",userMiddleware,async(req,res)=>{
     })
 
 })
+
+// Delete content
+app.delete("/api/v1/content",userMiddleware,async(req,res)=>{
+    const contentId=req.body.contentId;
+    await ContentModel.deleteMany({
+        contentId,
+        // @ts-ignore
+        userId:req.userId
+    })
+    res.json({
+        message:"Deleted"
+    })
+})
+
+
+
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
