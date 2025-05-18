@@ -14,28 +14,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const db_1 = require("./db");
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config(); // ✅ Load .env variables
 // d.ts for the declation file
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-// Routes
 app.post('/api/v1/signup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // Zod validation
-    const username = req.body.username;
-    const password = req.body.password;
-    yield db_1.UserModel.create({
-        username: username,
-        password: password
-    });
-    res.json({
-        message: "User signed up"
-    });
+    try {
+        // Get username and password from request body
+        const username = req.body.username;
+        const password = req.body.password;
+        const user = yield db_1.UserModel.create({
+            username: username,
+            password: password
+        });
+        res.status(201).json({
+            message: "User signed up successfully",
+            userId: user._id
+        });
+    }
+    catch (error) {
+        console.error("Signup error:", error);
+        res.status(500).json({ message: "Error during signup" });
+    }
 }));
-app.post('/api/v1/signin', (req, res) => {
-    const username = req.body;
-});
-app.post('api/v1/content', (req, res) => {
-});
-app.post('/api/v1/verify', (req, res) => {
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });

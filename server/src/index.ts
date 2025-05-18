@@ -1,39 +1,37 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import jwt from 'jsonwebtoken';
 import { UserModel } from './db';
-import dotenv from 'dotenv';
 
-dotenv.config(); // ✅ Load .env variables
 // d.ts for the declation file
 const app = express();
 app.use(express.json());
-// Routes
+
 
 app.post('/api/v1/signup', async (req, res) => {
-    // Zod validation
-    const username = req.body.username;
-    const password = req.body.password;
-    await UserModel.create({
-        username: username,
-        password: password
-    })
-    res.json({
-        message:"User signed up"
-    })
+    try {
+        // Get username and password from request body
+        const username = req.body.username;
+        const password = req.body.password;
+        
+        const user = await UserModel.create({
+            username: username,
+            password: password 
+        });
+        
+        res.status(201).json({
+            message: "User signed up successfully",
+            userId: user._id
+        });
+    } catch (error) {
+        console.error("Signup error:", error);
+        res.status(500).json({ message: "Error during signup" });
+    }
 })
 
-app.post('/api/v1/signin', (req, res) => {
-  const username=req.body
-})
-
-app.post('api/v1/content', (req, res) => {
-
-})
-
-
-app.post('/api/v1/verify', (req, res) => {
-
-})
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 
 

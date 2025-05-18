@@ -1,11 +1,8 @@
 // Here we write the database connection code
-import {model,Schema} from 'mongoose';
-import connectDB from './dbConnect';
+import mongoose,{model,Schema} from 'mongoose';
 
-connectDB().catch(err => {
-    console.error('Failed to connect to MongoDB', err);
-    process.exit(1);
-});
+// mongoose.connect(process.env.MONGODB_URL as string);
+mongoose.connect("mongodb://localhost:27017/");
 
 // So here we create the model
 const UserSchema=new Schema({
