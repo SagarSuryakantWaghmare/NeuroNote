@@ -1,15 +1,17 @@
 // Here we write the database connection code
+import {model,Schema} from 'mongoose';
+import connectDB from './dbConnect';
 
-import mongoose from 'mongoose';
+connectDB().catch(err => {
+    console.error('Failed to connect to MongoDB', err);
+    process.exit(1);
+});
 
-const connectDB=async():Promise<void> =>{
-    try{
-        const conn=await mongoose.connect(process.env.MONGODB_URI as string);
-        console.log(`MongoDB Connected: ${conn.connection.host}`);
-    }
-    catch(error){
-        console.log(`Error:${error as Error}.message`);
-        process.exit(1);
-    }
-}
-export default connectDB;
+// So here we create the model
+const UserSchema=new Schema({
+    username:{type:String,unique:true},
+    password:String,
+})
+
+export const UserModel=model("User",UserSchema);
+
