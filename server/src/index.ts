@@ -77,6 +77,7 @@ app.get("/api/v1/content",userMiddleware,async(req,res)=>{
     const content= await ContentModel.find({
         userId:userId
     }).populate("userId","username")
+    // It is used to get the specific data from the given 
     res.json({
         content
     })
