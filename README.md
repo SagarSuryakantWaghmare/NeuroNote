@@ -1,6 +1,3 @@
-Sure! Here's the entire **README.md** content in one single markdown code block, ready to copy and paste:
-
-```markdown
 # 🧠 NeuroNote
 
 **Your Second Brain for Smarter Note-Taking**
@@ -127,11 +124,6 @@ Now, open [http://localhost:5173](http://localhost:5173) to view the app in your
 
 ---
 
-## 📸 Screenshots
-
-> Add screenshots here (Dashboard, Add Note screen, Login/Register)
-
----
 
 ## 🤝 Contributing
 
