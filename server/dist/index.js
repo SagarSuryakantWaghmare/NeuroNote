@@ -89,6 +89,18 @@ app.get("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(
         content
     });
 }));
+// Delete content
+app.delete("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const contentId = req.body.contentId;
+    yield db_1.ContentModel.deleteMany({
+        contentId,
+        // @ts-ignore
+        userId: req.userId
+    });
+    res.json({
+        message: "Deleted"
+    });
+}));
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
