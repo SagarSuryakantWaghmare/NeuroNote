@@ -1,8 +1,13 @@
 import React from 'react'
+import { Button } from './components/ui/Button'
+import { PlusIcon } from './icons/Plusicon'
 
 const App = () => {
   return (
-    <div className='text-2xl'>App</div>
+   <>
+   <Button startIcon={<PlusIcon/>} variant="primary" text="share"/>
+   <Button variant='secondary' text="Add content"/>
+   </>
   )
 }
 
