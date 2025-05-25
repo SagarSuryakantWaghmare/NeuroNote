@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ContentModel = exports.UserModel = void 0;
+exports.ContentModel = exports.LinkModel = exports.UserModel = void 0;
 // Here we write the database connection code
 const mongoose_1 = __importStar(require("mongoose"));
 // mongoose.connect(process.env.MONGODB_URL as string);
@@ -50,4 +50,12 @@ const ContentSchema = new mongoose_1.Schema({
     tags: [{ type: mongoose_1.default.Types.ObjectId, ref: "Tag" }],
     userId: { type: mongoose_1.default.Types.ObjectId, ref: 'User', required: true }
 });
+// Links schema
+const linkSchema = new mongoose_1.Schema({
+    hash: String,
+    userId: { type: mongoose_1.default.Types.ObjectId, ref: 'User', required: true,
+        unique: true
+    }
+});
+exports.LinkModel = (0, mongoose_1.model)("Links", linkSchema);
 exports.ContentModel = (0, mongoose_1.model)("Content", ContentSchema);
