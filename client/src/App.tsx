@@ -1,7 +1,12 @@
+import { Button } from "./components/Button";
+import { PlusIcon } from "./icons/Plusicon";
+import { ShareIcon } from "./icons/ShareIcon";
+
 export default function App() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <>
+    <Button variant="primary" text="Add content" startIcon={<PlusIcon />} />
+    <Button variant="secondary" text="Share" startIcon={<ShareIcon/>} />
+    </>
   )
 }
