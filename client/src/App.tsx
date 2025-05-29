@@ -1,11 +1,13 @@
 import { Button } from "./components/Button";
 import { Card } from "./components/Card";
+import { CreateContentModal } from "./components/CreateContent";
 import { PlusIcon } from "./icons/Plusicon";
 import { ShareIcon } from "./icons/ShareIcon";
 
 export default function App() {
   return (
     <>
+    <CreateContentModal open={true}/>
       <div className="p-4 ">
         <div className="flex justify-end gap-4">
           <Button variant="primary" text="Add content" startIcon={<PlusIcon />} />
