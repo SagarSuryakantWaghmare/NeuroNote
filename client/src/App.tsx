@@ -1,12 +1,21 @@
 import { Button } from "./components/Button";
+import { Card } from "./components/Card";
 import { PlusIcon } from "./icons/Plusicon";
 import { ShareIcon } from "./icons/ShareIcon";
 
 export default function App() {
   return (
     <>
-    <Button variant="primary" text="Add content" startIcon={<PlusIcon />} />
-    <Button variant="secondary" text="Share" startIcon={<ShareIcon/>} />
+      <div className="p-4 ">
+        <div className="flex justify-end gap-4">
+          <Button variant="primary" text="Add content" startIcon={<PlusIcon />} />
+          <Button variant="secondary" text="Share Brain" startIcon={<ShareIcon />} />
+        </div>
+        <div className="flex gap-4">
+          <Card type="twitter" link="https://twitter.com/Cambridge_Uni/status/1927711602020610066" title="First Tweet" />
+          <Card type="youtube" link="https://www.youtube.com/watch?v=xGQuT1wm2qk&ab_channel=NadiadwalaGrandson" title="First Video" />
+        </div>
+      </div>
     </>
   )
 }
