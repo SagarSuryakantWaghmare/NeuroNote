@@ -4,6 +4,7 @@ import { YoutubeIcon } from "../icons/YoutubeIcon";
 import { SidebarItem } from "./SidebarItem";
 import { HamburgerIcon } from "../icons/HamburgerIcon";
 import { CrossIcon } from "../icons/CrossIcon";
+import { NeuroIcon } from "../icons/NeuroIcon";
 
 export function Sidebar() {
     const [isOpen, setIsOpen] = useState(true);
@@ -28,8 +29,8 @@ export function Sidebar() {
 
     return (
         <>
-            {/* Mobile menu button */}
-            <div className="md:hidden fixed top-4 left-4 z-30">
+            {/* Mobile menu button in top-right corner */}
+            <div className="md:hidden fixed top-4 right-4 z-30">
                 <button 
                     onClick={() => setIsOpen(!isOpen)}
                     className="p-2 rounded-md bg-white shadow-md"
@@ -37,6 +38,22 @@ export function Sidebar() {
                     {isOpen ? <CrossIcon /> : <HamburgerIcon />}
                 </button>
             </div>
+            
+            {/* Mobile horizontal top navigation bar */}
+            {isMobile && (
+                <div className="md:hidden fixed top-0 left-0 right-0 bg-white shadow-md z-20 p-2">
+                    <div className="flex items-center justify-between px-2">
+                        <div className="flex items-center">
+                            <NeuroIcon />
+                            <div className="text-lg font-bold pl-3">NeuroNote</div>
+                        </div>
+                        <div className="flex gap-6 py-2 px-3 mr-10">
+                            <SidebarItem text="Twitter" icon={<TwitterIcon />} collapsed={true} horizontal={true} />
+                            <SidebarItem text="YouTube" icon={<YoutubeIcon />} collapsed={true} horizontal={true} />
+                        </div>
+                    </div>
+                </div>
+            )}
             
             {/* Backdrop for mobile */}
             {isMobile && isOpen && (
@@ -46,17 +63,50 @@ export function Sidebar() {
                 />
             )}
             
-            {/* Sidebar */}
-            <div className={`h-screen bg-white border-r shadow-sm fixed left-0 top-0 z-20 transition-all duration-300 ${
-                isOpen ? "w-72" : "w-0 -translate-x-full md:translate-x-0 md:w-16"
-            }`}>
-                <div className={`p-4 ${!isOpen && "md:px-2"}`}>
-                    <div className={`flex text-2xl font-bold mb-6 pl-2 ${!isOpen && "md:hidden"}`}>NeuroNote</div>
-                    <div className="space-y-1">
-                        <SidebarItem text="Twitter" icon={<TwitterIcon />} collapsed={!isOpen} />
-                        <SidebarItem text="YouTube" icon={<YoutubeIcon />} collapsed={!isOpen} />
+            {/* Desktop sidebar or mobile dropdown menu */}
+            <div className={`bg-white shadow-md fixed z-25 transition-all duration-300
+                ${isMobile 
+                    ? `top-14 left-0 right-0 w-full overflow-hidden ${isOpen ? "max-h-screen" : "max-h-0"}`
+                    : `h-screen left-0 top-0 border-r ${isOpen ? "w-72" : "w-0 -translate-x-full md:translate-x-0 md:w-16"}`
+                }
+            `}>
+                {/* Content layout differs for mobile vs desktop */}
+                {isMobile ? (
+                    <div className="p-4 pt-14">
+                        {/* Mobile sidebar - vertical layout when open */}
+                        <div className="flex items-center mb-6">
+                            <div className="flex-shrink-0">
+                                <NeuroIcon />
+                            </div>
+                            <div className="text-xl font-bold pl-3">NeuroNote</div>
+                        </div>
+                        
+                        {/* Navigation items */}
+                        <div className="space-y-3">
+                            <SidebarItem text="Twitter" icon={<TwitterIcon />} collapsed={false} />
+                            <SidebarItem text="YouTube" icon={<YoutubeIcon />} collapsed={false} />
+                        </div>
                     </div>
-                </div>
+                ) : (
+                    /* Desktop sidebar */
+                    <div className={`p-4 ${!isOpen && "md:px-2 md:py-6"}`}>
+                        {/* Logo and title */}
+                        <div className={`flex items-center ${!isOpen ? "md:justify-center" : "mb-8"}`}>
+                            <div className="flex-shrink-0">
+                                <NeuroIcon />
+                            </div>
+                            {isOpen && (
+                                <div className="text-xl font-bold pl-3">NeuroNote</div>
+                            )}
+                        </div>
+                        
+                        {/* Navigation items with proper spacing */}
+                        <div className="space-y-2 mt-6">
+                            <SidebarItem text="Twitter" icon={<TwitterIcon />} collapsed={!isOpen} />
+                            <SidebarItem text="YouTube" icon={<YoutubeIcon />} collapsed={!isOpen} />
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     );

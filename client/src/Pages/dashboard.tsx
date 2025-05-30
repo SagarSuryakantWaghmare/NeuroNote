@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Button } from "./components/Button";
-import { Card } from "./components/Card";
-import { CreateContentModal } from "./components/CreateContent";
-import { PlusIcon } from "./icons/Plusicon";
-import { ShareIcon } from "./icons/ShareIcon";
-import { Sidebar } from "./components/Sidebar";
+import { Button } from "../components/Button";
+import { Card } from "../components/Card";
+import { CreateContentModal } from "../components/CreateContent";
+import { PlusIcon } from "../icons/Plusicon";
+import { ShareIcon } from "../icons/ShareIcon";
+import { Sidebar } from "../components/Sidebar";
 
 // Define Twitter's widget JS API (same as in Card.tsx)
 declare global {
@@ -18,7 +18,7 @@ declare global {
 }
 
 
-export default function App() {
+export default function dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
   // Check if we're on mobile for layout adjustments
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);

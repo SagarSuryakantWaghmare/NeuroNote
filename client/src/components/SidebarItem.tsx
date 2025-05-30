@@ -4,16 +4,27 @@ interface SidebarItemProps {
     text: string;
     icon: ReactElement;
     collapsed?: boolean;
+    horizontal?: boolean;
 }
 
-export function SidebarItem({ text, icon, collapsed = false }: SidebarItemProps) {
+export function SidebarItem({ text, icon, collapsed = false, horizontal = false }: SidebarItemProps) {
     return (
         <>
-            <div className={`flex items-center ${collapsed ? 'justify-center' : 'gap-2'} p-2 hover:bg-gray-100 rounded-md cursor-pointer transition-all`}>
-                <div className={collapsed ? "" : "mr-2"}>
+            <div 
+                className={`
+                    flex items-center ${collapsed ? 'justify-center' : 'justify-start'} 
+                    ${horizontal ? 'p-1.5 rounded-full' : 'p-2.5 rounded-md'} 
+                    cursor-pointer transition-all
+                    hover:bg-gray-100 active:bg-gray-200
+                `}
+                title={collapsed ? text : undefined}
+            >
+                <div className="flex-shrink-0">
                     {icon}
                 </div>
-                {!collapsed && <span>{text}</span>}
+                {!collapsed && (
+                    <span className="ml-3 font-medium text-gray-700">{text}</span>
+                )}
             </div>
         </>
     )
