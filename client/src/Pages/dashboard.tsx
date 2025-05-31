@@ -72,8 +72,7 @@ export function Dashboard() {
           navigate('/signin');
           return;
         }
-        
-        const response = await axios.get(`${BACKEND_URL}/api/v1/content`, {
+          const response = await axios.get(`/api/v1/content`, {
           headers: {
             Authorization: token
           }

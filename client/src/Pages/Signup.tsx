@@ -21,11 +21,10 @@ export function Signup() {
             }
             
             console.log("Sending signup request with:", { username, password });
-            
-            // Use a more explicit configuration for the request
+              // Use the proxy configured in vite.config.ts
             const response = await axios({
                 method: 'post',
-                url: `${BACKEND_URL}/api/v1/signup`,
+                url: `/api/v1/signup`,
                 data: { username, password },
                 headers: {
                     'Content-Type': 'application/json',

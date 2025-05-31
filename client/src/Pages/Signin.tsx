@@ -22,8 +22,7 @@ export function Signin() {
                 setIsLoading(false);
                 return;
             }
-            
-            const response = await axios.post(`${BACKEND_URL}/api/v1/signin`, {
+              const response = await axios.post(`/api/v1/signin`, {
                 username,
                 password
             });

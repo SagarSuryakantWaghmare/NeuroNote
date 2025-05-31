@@ -1,1 +1,2 @@
-export const BACKEND_URL =  "http://localhost:3000";
+// Using Vite's proxy, so the base URL is empty
+export const BACKEND_URL = "";
