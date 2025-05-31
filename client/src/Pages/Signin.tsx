@@ -26,12 +26,8 @@ export function Signin() {
                 username,
                 password
             });
-            
-            // Store token in localStorage
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
-                
-                // Navigate to dashboard on successful login
                 navigate('/');
             } else {
                 alert("Login failed. Please check your credentials.");
