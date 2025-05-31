@@ -65,18 +65,31 @@ app.post('/api/v1/signin', (req, res) => __awaiter(void 0, void 0, void 0, funct
 }));
 // Content api
 app.post("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const link = req.body.link;
-    const type = req.body.type;
-    yield db_1.ContentModel.create({
-        link,
-        type,
-        //@ts-ignore
-        userId: req.userId,
-        tags: []
-    });
-    res.json({
-        message: "Content Added"
-    });
+    try {
+        const link = req.body.link;
+        const title = req.body.title;
+        const type = req.body.type;
+        if (!link || !type) {
+            res.status(400).json({ message: "Link and type are required" });
+            return;
+        }
+        const content = yield db_1.ContentModel.create({
+            link,
+            type,
+            title,
+            //@ts-ignore
+            userId: req.userId,
+            tags: []
+        });
+        res.json({
+            message: "Content Added",
+            content
+        });
+    }
+    catch (error) {
+        console.error("Error adding content:", error);
+        res.status(500).json({ message: "Error adding content" });
+    }
 }));
 // Give content
 app.get("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {

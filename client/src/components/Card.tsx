@@ -49,13 +49,14 @@ export function Card({ title, link, type }: CardProps) {
             <div className="p-4 bg-white rounded-md border-gray-200 border overflow-hidden">
                 {/* Header Section */}
                 <div className="flex justify-between">
-                    {/* Left Section: Title with Icon */}
-                    <div className="flex items-center text-md">
-                        <div className="text-gray-500 pr-2">
+                    {/* Left Section: Title with Icon */}                    <div className="flex items-center text-md max-w-[80%]">
+                        <div className="text-gray-500 pr-2 flex-shrink-0">
                             {/* Share Icon preceding the title */}
                             <ShareIcon />
                         </div>
-                        {title}
+                        <div className="font-medium text-gray-800 truncate" title={title}>
+                            {title}
+                        </div>
                     </div>
                     {/* Right Section: Links with Icons */}
                     <div className="flex items-center">
@@ -93,11 +94,13 @@ export function Card({ title, link, type }: CardProps) {
 
                     )}
 
-                    {/* Render Twitter embed if type is "twitter" */}
+                {/* Render Twitter embed if type is "twitter" */}
                     {type === "twitter" && (
-                        <blockquote className="twitter-tweet">
-                            <a href={link.replace("x.com", "twitter.com")}></a>
-                        </blockquote>
+                        <div ref={tweetRef}>
+                            <blockquote className="twitter-tweet">
+                                <a href={link.replace("x.com", "twitter.com")}></a>
+                            </blockquote>
+                        </div>
                     )}
                 </div>
             </div>

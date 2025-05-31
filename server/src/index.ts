@@ -56,19 +56,32 @@ app.post('/api/v1/signin', async (req, res) => {
 
 // Content api
 app.post("/api/v1/content", userMiddleware, async (req, res) => {
-    const link = req.body.link;
-    const type = req.body.type;
-    await ContentModel.create({
-        link,
-        type,
-        //@ts-ignore
-        userId: req.userId,
-        tags: []
-    })
-    res.json({
-        message: "Content Added"
-    })
-
+    try {
+        const link=req.body.link;
+        const title=req.body.title;
+        const type=req.body.type;
+        if (!link || !type) {
+            res.status(400).json({ message: "Link and type are required" });
+            return;
+        }
+        
+        const content = await ContentModel.create({
+            link,
+            type,
+            title ,
+            //@ts-ignore
+            userId: req.userId,
+            tags: []
+        });
+        
+        res.json({
+            message: "Content Added",
+            content
+        });
+    } catch (error) {
+        console.error("Error adding content:", error);
+        res.status(500).json({ message: "Error adding content" });
+    }
 })
 
 // Give content
