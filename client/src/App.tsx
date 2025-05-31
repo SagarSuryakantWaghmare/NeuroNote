@@ -1,86 +1,20 @@
-import { useState, useEffect } from "react";
-import { Button } from "./components/Button";
-import { Card } from "./components/Card";
-import { CreateContentModal } from "./components/CreateContent";
-import { PlusIcon } from "./icons/Plusicon";
-import { ShareIcon } from "./icons/ShareIcon";
-import { Sidebar } from "./components/Sidebar";
-
-// Define Twitter's widget JS API (same as in Card.tsx)
-declare global {
-  interface Window {
-    twttr: {
-      widgets: {
-        load: (element?: HTMLElement) => Promise<void>;
-      };
-    };
-  }
-}
-
-
-export default function App() {
-  const [modalOpen, setModalOpen] = useState(false);
-  // Check if we're on mobile for layout adjustments
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-  
-  // Update mobile state on resize
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-  
-  // Reload Twitter widgets on window resize for better responsiveness
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.twttr?.widgets) {
-        setTimeout(() => {
-          window.twttr.widgets.load();
-        }, 100);
-      }
-    };
-    
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-  
+import { Dashboard } from './Pages/dashboard'
+import { Signup } from './Pages/Signup'
+import { Signin } from './Pages/Signin'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+const App = () => {
   return (
     <>
-      <div className="flex">
-        <Sidebar />
-        <div className={`p-4 md:p-6 ${!isMobile ? "md:ml-72" : "mt-16"} min-h-screen w-full bg-gray-50`}>
-          <CreateContentModal open={modalOpen} onClose={() => { setModalOpen(false) }} />
-          
-          {/* Content area with proper spacing for top nav on mobile */}
-          <div className="md:max-w-7xl mx-auto md:pt-0">
-            <div className="flex flex-col md:flex-row justify-between items-center mb-6 md:mb-8 gap-4">
-              <h1 className="text-xl md:text-2xl font-bold text-gray-800">Your Content</h1>
-              <div className="flex gap-2 md:gap-3">
-                <Button 
-                  onClick={() => { setModalOpen(true) }} 
-                  variant="primary" 
-                  text="Add content" 
-                  startIcon={<PlusIcon />} 
-                />
-                <Button 
-                  variant="secondary" 
-                  text="Share Brain" 
-                  startIcon={<ShareIcon />} 
-                />
-                
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
-              <Card type="twitter" link="https://twitter.com/Cambridge_Uni/status/1927711602020610066" title="First Tweet" />
-              <Card type="youtube" link="https://www.youtube.com/watch?v=xGQuT1wm2qk&ab_channel=NadiadwalaGrandson" title="First Video" />
-            </div>
-          </div>
-        </div>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
+    
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
+
+export default App

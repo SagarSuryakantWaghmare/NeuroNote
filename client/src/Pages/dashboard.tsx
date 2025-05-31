@@ -5,6 +5,9 @@ import { CreateContentModal } from "../components/CreateContent";
 import { PlusIcon } from "../icons/Plusicon";
 import { ShareIcon } from "../icons/ShareIcon";
 import { Sidebar } from "../components/Sidebar";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
+import { useNavigate } from "react-router-dom";
 
 // Define Twitter's widget JS API (same as in Card.tsx)
 declare global {
@@ -18,10 +21,21 @@ declare global {
 }
 
 
-export default function dashboard() {
+interface ContentItem {
+  _id: string;
+  link: string;
+  type: "twitter" | "youtube";
+  userId: string;
+  tags: string[];
+}
+
+export function Dashboard() {
   const [modalOpen, setModalOpen] = useState(false);
   // Check if we're on mobile for layout adjustments
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [contents, setContents] = useState<ContentItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   
   // Update mobile state on resize
   useEffect(() => {
@@ -32,8 +46,7 @@ export default function dashboard() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  
-  // Reload Twitter widgets on window resize for better responsiveness
+    // Reload Twitter widgets on window resize for better responsiveness
   useEffect(() => {
     const handleResize = () => {
       if (window.twttr?.widgets) {
@@ -46,6 +59,43 @@ export default function dashboard() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+  
+  // Fetch user content when component mounts
+  useEffect(() => {
+    const fetchUserContent = async () => {
+      try {
+        setLoading(true);
+        const token = localStorage.getItem('token');
+        
+        if (!token) {
+          // Redirect to login if no token
+          navigate('/signin');
+          return;
+        }
+        
+        const response = await axios.get(`${BACKEND_URL}/api/v1/content`, {
+          headers: {
+            Authorization: token
+          }
+        });
+        
+        if (response.data && response.data.content) {
+          setContents(response.data.content);
+        }
+      } catch (error) {
+        console.error("Error fetching content:", error);
+        // If unauthorized, redirect to login
+        if (axios.isAxiosError(error) && error.response?.status === 401) {
+          localStorage.removeItem('token');
+          navigate('/signin');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchUserContent();
+  }, [navigate]);
   
   return (
     <>
