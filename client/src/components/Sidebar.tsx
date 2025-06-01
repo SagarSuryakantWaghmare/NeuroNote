@@ -44,10 +44,10 @@ export function Sidebar() {
                 <div className="md:hidden fixed top-0 left-0 right-0 bg-white shadow-md z-20 p-2">
                     <div className="flex items-center justify-between px-2">
                         <div className="flex items-center">
-                            <NeuroIcon />
-                            <div className="text-lg font-bold pl-3">NeuroNote</div>
+                            <NeuroIcon />                            <div className="text-lg font-bold pl-3">NeuroNote</div>
                         </div>
                         <div className="flex gap-6 py-2 px-3 mr-10">
+                            <SidebarItem text="Home" icon={<NeuroIcon />} collapsed={true} horizontal={true} to="/" />
                             <SidebarItem text="Twitter" icon={<TwitterIcon />} collapsed={true} horizontal={true} />
                             <SidebarItem text="YouTube" icon={<YoutubeIcon />} collapsed={true} horizontal={true} />
                         </div>

@@ -1,16 +1,18 @@
 import type { ReactElement } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface SidebarItemProps {
     text: string;
     icon: ReactElement;
     collapsed?: boolean;
     horizontal?: boolean;
+    to?: string;
 }
 
-export function SidebarItem({ text, icon, collapsed = false, horizontal = false }: SidebarItemProps) {
+export function SidebarItem({ text, icon, collapsed = false, horizontal = false, to }: SidebarItemProps) {
+    const navigate = useNavigate();
     return (
-        <>
-            <div 
+        <>            <div 
                 className={`
                     flex items-center ${collapsed ? 'justify-center' : 'justify-start'} 
                     ${horizontal ? 'p-1.5 rounded-full' : 'p-2.5 rounded-md'} 
@@ -18,6 +20,7 @@ export function SidebarItem({ text, icon, collapsed = false, horizontal = false 
                     hover:bg-gray-100 active:bg-gray-200
                 `}
                 title={collapsed ? text : undefined}
+                onClick={() => to && navigate(to)}
             >
                 <div className="flex-shrink-0">
                     {icon}
