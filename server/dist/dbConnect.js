@@ -16,7 +16,8 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // const conn=await mongoose.connect(process.env.MONGODB_URL as string);
-        const conn = yield mongoose_1.default.connect("mongodb+srv://sagarwaghmare1384:k5Pja5QmixtFSeDE@neuronote.3rfvhe8.mongodb.net/");
+        // const conn=await mongoose.connect("mongodb+srv://sagarwaghmare1384:k5Pja5QmixtFSeDE@neuronote.3rfvhe8.mongodb.net/");
+        const conn = yield mongoose_1.default.connect("mongodb+srv://rijushree123:Catdogmongo@cluster0.dybpkkl.mongodb.net/");
         console.log(`MongoDB Connected: ${conn.connection.host}`);
     }
     catch (error) {

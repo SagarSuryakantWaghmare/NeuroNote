@@ -6,28 +6,58 @@ import { JsonWebTokenError } from 'jsonwebtoken';
 import { JWT_PASSWORD } from './config';
 import { userMiddleware } from './middleware';
 import { random } from './utils';
+import cors from 'cors';
+import connectDB from './dbConnect';
+
 // d.ts for the declation file
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.post('/api/v1/signup', async (req, res) => {
     try {
         // Get username and password from request body
-        const username = req.body.username;
-        const password = req.body.password;
+        const { username, password } = req.body;
+        
+        // Validate input
+        if (!username || !password) {
+            res.status(400).json({ 
+                message: "Username and password are required" 
+            });
+            return;
+        }
+        
+        // Check if user already exists
+        const existingUser = await UserModel.findOne({ username });
+        if (existingUser) {
+            res.status(409).json({ 
+                message: "Username already exists" 
+            });
+            return;
+        }
 
         const user = await UserModel.create({
-            username: username,
-            password: password
+            username,
+            password
         });
+
+        // Create token for immediate login
+        const token = jwt.sign({
+            id: user._id
+        }, JWT_PASSWORD);
 
         res.status(201).json({
             message: "User signed up successfully",
-            userId: user._id
+            userId: user._id,
+            token
         });
     } catch (error) {
         console.error("Signup error:", error);
-        res.status(500).json({ message: "Error during signup" });
+        // More detailed error message
+        const errorMessage = error instanceof Error ? 
+            `Error during signup: ${error.message}` : 
+            "Error during signup";
+        res.status(500).json({ message: errorMessage });
     }
 })
 
@@ -210,10 +240,23 @@ app.get("/api/v1/brain/:shareLink", userMiddleware, async (req, res) => {
         });
     }
 })
-// Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+// Add health check endpoint
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'ok', message: 'Server is running' });
 });
 
+// Start the server with database connection
+const PORT = process.env.PORT || 3000;
+
+// Connect to MongoDB first, then start the server
+connectDB()
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    })
+    .catch(err => {
+        console.error('Failed to connect to MongoDB:', err);
+        process.exit(1);
+    });
 

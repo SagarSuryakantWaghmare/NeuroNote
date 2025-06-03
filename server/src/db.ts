@@ -1,8 +1,9 @@
 // Here we write the database connection code
 import mongoose,{model,Schema} from 'mongoose';
 
-// mongoose.connect(process.env.MONGODB_URL as string);
-mongoose.connect("mongodb://localhost:27017/neuronote");
+// Using MongoDB Atlas instead of local MongoDB
+// mongoose.connect("mongodb://localhost:27017/neuronote");
+// Connection is now handled in index.ts through dbConnect.ts
 
 // So here we create the model
 const UserSchema=new Schema({
@@ -32,4 +33,3 @@ const linkSchema=new Schema({
 
 export const LinkModel=model("Links",linkSchema);
 export const ContentModel=model("Content",ContentSchema);
-

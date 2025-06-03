@@ -36,8 +36,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ContentModel = exports.LinkModel = exports.UserModel = void 0;
 // Here we write the database connection code
 const mongoose_1 = __importStar(require("mongoose"));
-// mongoose.connect(process.env.MONGODB_URL as string);
-mongoose_1.default.connect("mongodb://localhost:27017/neuronote");
+// Using MongoDB Atlas instead of local MongoDB
+// mongoose.connect("mongodb://localhost:27017/neuronote");
+// Connection is now handled in index.ts through dbConnect.ts
 // So here we create the model
 const UserSchema = new mongoose_1.Schema({
     username: { type: String, unique: true },
