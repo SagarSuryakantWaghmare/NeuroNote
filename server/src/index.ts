@@ -143,51 +143,57 @@ app.delete("/api/v1/content", userMiddleware, async (req, res) => {
 
 // Sharing to the other user
 app.post("/api/v1/brain/share", userMiddleware, async (req, res) => {
-    const share = req.body.share;
-    if (share) {
-        try {
-            const existingLink=await LinkModel.findOne({
+    try {
+        const share = req.body.share;
+        
+        if (share) {
+            // Check if user already has a share link
+            const existingLink = await LinkModel.findOne({
                 // @ts-ignore
-               userId: req.userId
-
-            })
-            if(existingLink){
+                userId: req.userId
+            });
+            
+            if (existingLink) {
                 res.json({
-                    hash:existingLink.hash 
-                })
+                    hash: existingLink.hash,
+                    message: "Share link already exists"
+                });
                 return;
             }
+            
+            // Create new share link
             const hash = random(10);
             await LinkModel.create({
                 // @ts-ignore
                 userId: req.userId,
                 hash: hash
-            })
-            res.json({
-                message: "/share/" + hash,
-                shareLink: hash
-            })
-        } catch (error) {
+            });
             
+            res.json({
+                hash: hash,
+                message: "Share link created successfully"
+            });
+        } else {
+            // Delete existing share link
+            await LinkModel.deleteOne({
+                // @ts-ignore
+                userId: req.userId
+            });
+            
+            res.json({
+                message: "Share link deleted"
+            });
         }
-    }
-    else {
-        await LinkModel.deleteOne({
-            // @ts-ignore
-            userId: req.userId
+    } catch (error) {
+        console.error("Error in share endpoint:", error);
+        res.status(500).json({
+            message: "Error processing share request"
         });
-        res.json({
-            message: "Share link deleted"
-        })
     }
-
-    res.json({
-        message: "Updated sharable link"
-    })
 })
 
 // getting the sharelink from the user and server
-app.get("/api/v1/brain/:shareLink", userMiddleware, async (req, res) => {
+app.get("/api/v1/brain/:shareLink", async (req, res) => {
     try {
         const hash = req.params.shareLink;
         if (!hash) {

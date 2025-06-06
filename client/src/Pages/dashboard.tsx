@@ -85,11 +85,58 @@ export function Dashboard() {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchUserContent();
   }, [navigate]);
-  console.log(contents);  return (
+
+  // Function to share content
+  const shareContent = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        navigate('/signin');
+        return;
+      }
+      
+      const response = await axios.post('/api/v1/brain/share', 
+        { share: true }, // Request body
+        {
+          headers: {
+            Authorization: token
+          }
+        }
+      );
+      
+      if (response.data && response.data.hash) {
+        const shareUrl = `${window.location.origin}/share/${response.data.hash}`;
+        
+        // Copy to clipboard
+        try {
+          await navigator.clipboard.writeText(shareUrl);
+          alert(`Share link copied to clipboard!\n${shareUrl}`);
+        } catch (clipboardError) {
+          // Fallback if clipboard API fails
+          alert(`Share link: ${shareUrl}`);
+        }
+        
+        console.log("Share URL:", shareUrl);
+      }
+    } catch (error) {
+      console.error("Error sharing content:", error);
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        localStorage.removeItem('token');
+        navigate('/signin');
+      } else {
+        alert("Failed to create share link. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  console.log(contents);return (
     <>
       <div className="flex">
         <Sidebar />
@@ -113,8 +160,8 @@ export function Dashboard() {
                   variant="primary"
                   text="Add content"
                   startIcon={<PlusIcon />}
-                />
-                <Button
+                />                <Button
+                  onClick={shareContent}
                   variant="secondary"
                   text="Share Brain"
                   startIcon={<ShareIcon />}

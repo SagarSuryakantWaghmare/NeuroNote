@@ -143,19 +143,22 @@ app.delete("/api/v1/content", middleware_1.userMiddleware, (req, res) => __await
 }));
 // Sharing to the other user
 app.post("/api/v1/brain/share", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const share = req.body.share;
-    if (share) {
-        try {
+    try {
+        const share = req.body.share;
+        if (share) {
+            // Check if user already has a share link
             const existingLink = yield db_1.LinkModel.findOne({
                 // @ts-ignore
                 userId: req.userId
             });
             if (existingLink) {
                 res.json({
-                    hash: existingLink.hash
+                    hash: existingLink.hash,
+                    message: "Share link already exists"
                 });
                 return;
             }
+            // Create new share link
             const hash = (0, utils_1.random)(10);
             yield db_1.LinkModel.create({
                 // @ts-ignore
@@ -163,28 +166,30 @@ app.post("/api/v1/brain/share", middleware_1.userMiddleware, (req, res) => __awa
                 hash: hash
             });
             res.json({
-                message: "/share/" + hash,
-                shareLink: hash
+                hash: hash,
+                message: "Share link created successfully"
             });
         }
-        catch (error) {
+        else {
+            // Delete existing share link
+            yield db_1.LinkModel.deleteOne({
+                // @ts-ignore
+                userId: req.userId
+            });
+            res.json({
+                message: "Share link deleted"
+            });
         }
     }
-    else {
-        yield db_1.LinkModel.deleteOne({
-            // @ts-ignore
-            userId: req.userId
-        });
-        res.json({
-            message: "Share link deleted"
+    catch (error) {
+        console.error("Error in share endpoint:", error);
+        res.status(500).json({
+            message: "Error processing share request"
         });
     }
-    res.json({
-        message: "Updated sharable link"
-    });
 }));
 // getting the sharelink from the user and server
-app.get("/api/v1/brain/:shareLink", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get("/api/v1/brain/:shareLink", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const hash = req.params.shareLink;
         if (!hash) {
