@@ -5,26 +5,26 @@ import { TwitterIcon } from "../icons/TwitterIcon";
 
 export function LandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-cyan-50">
       {/* Navigation */}
       <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <div className="text-gray-800 h-10 w-10">
+            <div className="text-sky-600 h-10 w-10">
               <NeuroIcon />
             </div>
-            <span className="ml-2 text-xl font-bold text-gray-800">NeuroNote</span>
+            <span className="ml-2 text-xl font-bold bg-gradient-to-r from-sky-700 to-cyan-700 bg-clip-text text-transparent">NeuroNote</span>
           </div>
           <div className="flex items-center space-x-4">
-            <Link 
-              to="/signin" 
-              className="px-4 py-2 rounded-md hover:bg-gray-100 text-gray-700"
+            <Link
+              to="/signin"
+              className="px-4 py-2 rounded-lg hover:bg-sky-100 text-sky-700 font-medium transition-all duration-200"
             >
               Sign In
             </Link>
-            <Link 
-              to="/signup" 
-              className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200"
+            <Link
+              to="/signup"
+              className="px-6 py-2 bg-gradient-to-r from-sky-600 to-cyan-600 text-white rounded-lg hover:from-sky-700 hover:to-cyan-700 transition-all duration-200 shadow-lg hover:shadow-xl"
             >
               Sign Up
             </Link>
@@ -36,66 +36,78 @@ export function LandingPage() {
       <section className="container mx-auto px-6 pt-16 pb-24">
         <div className="flex flex-col md:flex-row items-center">
           <div className="w-full md:w-1/2 md:pr-10">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-800 leading-tight mb-6">
-              One Place. <span className="text-blue-600">Every Link.</span>
+            <div className="inline-flex items-center px-4 py-2 bg-sky-100 rounded-full text-sky-700 text-sm font-medium mb-6">
+              <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.293l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clipRule="evenodd" />
+              </svg>
+              Your Second Brain, Organized
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-slate-800 via-sky-800 to-cyan-800 bg-clip-text text-transparent leading-tight mb-6">
+              Capture. <span className="bg-gradient-to-r from-sky-600 to-cyan-600 bg-clip-text text-transparent">Organize.</span> <br />Remember.
             </h1>
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              NeuroNote lets you save and organize links to your most important content — videos, tweets, profiles, and posts — all in one simple dashboard.
+            <p className="text-xl text-slate-600 mb-8 leading-relaxed">
+              NeuroNote transforms scattered links into organized knowledge. Save videos, tweets, articles, and posts in one beautiful dashboard that thinks like you do.
             </p>
             <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-              <Link 
-                to="/signup" 
-                className="px-8 py-4 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition duration-200 text-center"
+              <Link
+                to="/signup"
+                className="px-8 py-4 bg-gradient-to-r from-sky-600 to-cyan-600 text-white font-semibold rounded-xl hover:from-sky-700 hover:to-cyan-700 transition-all duration-200 text-center shadow-lg hover:shadow-xl transform hover:-translate-y-1"
               >
-                Save Your First Link
+                Start Building Your Brain
               </Link>
-              <Link 
+              <Link
                 to="/signin"
-                className="px-8 py-4 bg-gray-200 text-gray-800 font-medium rounded-lg hover:bg-gray-300 transition duration-200 text-center"
+                className="px-8 py-4 bg-white text-sky-700 font-semibold rounded-xl hover:bg-sky-50 transition-all duration-200 text-center border-2 border-sky-200 hover:border-sky-300"
               >
-                Learn More
+                See How It Works
               </Link>
             </div>
           </div>
           <div className="w-full md:w-1/2 mt-16 md:mt-0">
-            <div className="relative shadow-2xl rounded-lg overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 z-0"></div>
-              <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 z-10 relative">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-sky-400/20 to-cyan-400/20 rounded-2xl transform rotate-3"></div>
+              <div className="relative bg-white p-8 rounded-2xl shadow-2xl border border-sky-100">
                 <div className="flex items-center space-x-2 mb-6">
-                  <div className="h-3 w-3 bg-red-500 rounded-full"></div>
-                  <div className="h-3 w-3 bg-yellow-500 rounded-full"></div>
-                  <div className="h-3 w-3 bg-green-500 rounded-full"></div>
+                  <div className="h-3 w-3 bg-red-400 rounded-full"></div>
+                  <div className="h-3 w-3 bg-yellow-400 rounded-full"></div>
+                  <div className="h-3 w-3 bg-green-400 rounded-full"></div>
+                  <div className="flex-1 bg-sky-50 rounded-full h-8 flex items-center px-4">
+                    <span className="text-sky-600 text-sm font-medium">neuronote.app/dashboard</span>
+                  </div>
                 </div>
                 <div className="space-y-4">
-                  <div className="bg-gray-100 p-4 rounded-lg flex items-center">
-                    <div className="text-red-600 mr-3">
+                  <div className="bg-gradient-to-r from-sky-50 to-cyan-50 p-4 rounded-xl flex items-center border border-sky-100">
+                    <div className="text-red-500 mr-4 bg-red-50 p-2 rounded-lg">
                       <YoutubeIcon />
                     </div>
-                    <div>
-                      <div className="text-sm text-gray-500">YouTube</div>
-                      <div className="font-medium">How to Master Productivity</div>
+                    <div className="flex-1">
+                      <div className="text-sm text-sky-600 font-medium mb-1">YouTube</div>
+                      <div className="font-semibold text-slate-800">AI Revolution: What's Next?</div>
+                      <div className="text-xs text-slate-500 mt-1">Saved 2 hours ago</div>
                     </div>
                   </div>
-                  <div className="bg-gray-100 p-4 rounded-lg flex items-center">
-                    <div className="text-blue-400 mr-3">
+                  <div className="bg-gradient-to-r from-sky-50 to-cyan-50 p-4 rounded-xl flex items-center border border-sky-100">
+                    <div className="text-blue-400 mr-4 bg-blue-50 p-2 rounded-lg">
                       <TwitterIcon />
                     </div>
-                    <div>
-                      <div className="text-sm text-gray-500">Twitter</div>
-                      <div className="font-medium">Thread: Web Dev Trends 2025</div>
+                    <div className="flex-1">
+                      <div className="text-sm text-sky-600 font-medium mb-1">Twitter</div>
+                      <div className="font-semibold text-slate-800">Thread: Future of Web Development</div>
+                      <div className="text-xs text-slate-500 mt-1">Saved yesterday</div>
                     </div>
                   </div>
-                  <div className="bg-gray-100 p-4 rounded-lg flex items-center">
-                    <div className="text-purple-600 mr-3">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <div className="bg-gradient-to-r from-sky-50 to-cyan-50 p-4 rounded-xl flex items-center border border-sky-100">
+                    <div className="text-sky-600 mr-4 bg-sky-50 p-2 rounded-lg">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <rect x="2" y="2" width="20" height="20" rx="5" />
                         <circle cx="12" cy="12" r="3" />
                         <circle cx="17.5" cy="6.5" r="1.5" />
                       </svg>
                     </div>
-                    <div>
-                      <div className="text-sm text-gray-500">Instagram</div>
-                      <div className="font-medium">Design Inspiration Collection</div>
+                    <div className="flex-1">
+                      <div className="text-sm text-sky-600 font-medium mb-1">Instagram</div>
+                      <div className="font-semibold text-slate-800">Design Inspiration Gallery</div>
+                      <div className="text-xs text-slate-500 mt-1">Saved 3 days ago</div>
                     </div>
                   </div>
                 </div>
@@ -106,50 +118,80 @@ export function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section className="bg-gray-50 py-20">
+      <section className="bg-gradient-to-r from-sky-50 to-cyan-50 py-24">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Everything You Need in One Place</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              NeuroNote brings all your important links together so you never lose track of valuable content.
+          <div className="text-center mb-20">
+            <div className="inline-flex items-center px-4 py-2 bg-sky-100 rounded-full text-sky-700 text-sm font-medium mb-6">
+              <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Everything You Need
+            </div>
+            <h2 className="text-4xl font-bold bg-gradient-to-r from-slate-800 to-sky-800 bg-clip-text text-transparent mb-6">
+              Your Digital Memory, Supercharged
+            </h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              NeuroNote doesn't just store your links—it creates connections, surfaces insights, and turns information overload into organized knowledge.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <div className="bg-white p-8 rounded-lg shadow-lg border border-gray-100">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-sky-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <div className="w-14 h-14 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl flex items-center justify-center mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-800">Save Links from Anywhere</h3>
-              <p className="text-gray-600">
-                Quickly save videos, tweets, posts, and articles with a simple workflow. Works with all major platforms.
+              <h3 className="text-xl font-bold mb-4 text-slate-800">Lightning Fast Capture</h3>
+              <p className="text-slate-600 leading-relaxed">
+                Save content from any platform in seconds. Our smart detection automatically extracts titles, thumbnails, and metadata so you don't have to.
               </p>
             </div>
 
-            <div className="bg-white p-8 rounded-lg shadow-lg border border-gray-100">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-sky-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-800">Categorize & Organize</h3>
-              <p className="text-gray-600">
-                Organize content by platform, topic, or custom categories. Create a system that works for your needs.
+              <h3 className="text-xl font-bold mb-4 text-slate-800">Smart Organization</h3>
+              <p className="text-slate-600 leading-relaxed">
+                AI-powered categorization and tagging means your content organizes itself. Find anything instantly with intelligent search and filters.
               </p>
             </div>
 
-            <div className="bg-white p-8 rounded-lg shadow-lg border border-gray-100">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-6">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-sky-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+              <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-xl flex items-center justify-center mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-800">Access Anywhere</h3>
-              <p className="text-gray-600">
-                Your links are securely stored in the cloud. Access them from any device, whenever you need them.
+              <h3 className="text-xl font-bold mb-4 text-slate-800">Share Your Brain</h3>
+              <p className="text-slate-600 leading-relaxed">
+                Create beautiful, shareable collections of your best finds. Collaborate with others or showcase your curated knowledge to the world.
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-20">
+        <div className="container mx-auto px-6">
+          <div className="bg-gradient-to-r from-sky-600 via-cyan-600 to-blue-600 rounded-3xl p-12 text-white">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+              <div>
+                <div className="text-4xl font-bold mb-2">10,000+</div>
+                <div className="text-sky-100">Links Organized</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold mb-2">2,500+</div>
+                <div className="text-sky-100">Active Users</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold mb-2">99.9%</div>
+                <div className="text-sky-100">Uptime</div>
+              </div>
             </div>
           </div>
         </div>
@@ -157,36 +199,60 @@ export function LandingPage() {
 
       {/* CTA Section */}
       <section className="container mx-auto px-6 py-24">
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-12 text-center text-white max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-6">Start Organizing Your Digital Library Today</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Join thousands of people who use NeuroNote to keep track of their important content.
+        <div className="bg-gradient-to-br from-slate-900 via-sky-900 to-cyan-900 rounded-3xl p-16 text-center text-white relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+        <div className="relative z-10">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-sky-200 bg-clip-text text-transparent">
+            Ready to Build Your Second Brain?
+          </h2>
+          <p className="text-xl mb-10 max-w-3xl mx-auto text-sky-100">
+            Join thousands of knowledge workers, creators, and lifelong learners who use NeuroNote to capture, organize, and connect their digital discoveries.
           </p>
-          <Link 
-            to="/signup" 
-            className="inline-block px-8 py-4 bg-white text-blue-600 font-medium rounded-lg hover:bg-gray-100 transition duration-200"
-          >
-            Get Started — It's Free
-          </Link>
+          <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <Link
+              to="/signup"
+              className="inline-block px-10 py-4 bg-gradient-to-r from-sky-500 to-cyan-500 text-white font-semibold rounded-xl hover:from-sky-400 hover:to-cyan-400 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
+              Start Free Today
+            </Link>
+            <Link
+              to="/signin"
+              className="inline-block px-10 py-4 bg-white/10 text-white font-semibold rounded-xl hover:bg-white/20 transition-all duration-200 backdrop-blur-sm border border-white/20"
+            >
+              View Demo
+            </Link>
+          </div>
+          <p className="text-sky-200 text-sm mt-6">No credit card required • Free forever plan available</p>
         </div>
-      </section>
+    </div >
+      </section >
+    </div >
 
-      {/* Footer */}
-      <footer className="bg-gray-50 py-12">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center mb-6 md:mb-0">
-              <div className="text-gray-800 h-8 w-8">
-                <NeuroIcon />
-              </div>
-              <span className="ml-2 text-lg font-bold text-gray-800">NeuroNote</span>
+
+
+
+    <footer className="bg-slate-50 py-16">
+      <div className="container mx-auto px-6">
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="flex items-center mb-8 md:mb-0">
+            <div className="text-sky-600 h-10 w-10">
+              <NeuroIcon />
             </div>
-            <div className="text-gray-500 text-sm">
-              &copy; {new Date().getFullYear()} NeuroNote. All rights reserved.
-            </div>
+            <span className="ml-3 text-xl font-bold bg-gradient-to-r from-sky-700 to-cyan-700 bg-clip-text text-transparent">NeuroNote</span>
+          </div>
+          <div className="flex items-center space-x-8">
+            <a href="#" className="text-slate-600 hover:text-sky-600 transition-colors">Privacy</a>
+            <a href="#" className="text-slate-600 hover:text-sky-600 transition-colors">Terms</a>
+            <a href="#" className="text-slate-600 hover:text-sky-600 transition-colors">Support</a>
           </div>
         </div>
-      </footer>
-    </div>
+        <div className="border-t border-slate-200 mt-12 pt-8 text-center">
+          <p className="text-slate-500">
+            &copy; {new Date().getFullYear()} NeuroNote. All rights reserved. Made with ❤️ for knowledge seekers.
+          </p>
+        </div>
+      </div>
+    </footer>
+    </div >
   );
 }
