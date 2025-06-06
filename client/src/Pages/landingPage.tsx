@@ -196,63 +196,6 @@ export function LandingPage() {
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="container mx-auto px-6 py-24">
-        <div className="bg-gradient-to-br from-slate-900 via-sky-900 to-cyan-900 rounded-3xl p-16 text-center text-white relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
-        <div className="relative z-10">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-sky-200 bg-clip-text text-transparent">
-            Ready to Build Your Second Brain?
-          </h2>
-          <p className="text-xl mb-10 max-w-3xl mx-auto text-sky-100">
-            Join thousands of knowledge workers, creators, and lifelong learners who use NeuroNote to capture, organize, and connect their digital discoveries.
-          </p>
-          <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <Link
-              to="/signup"
-              className="inline-block px-10 py-4 bg-gradient-to-r from-sky-500 to-cyan-500 text-white font-semibold rounded-xl hover:from-sky-400 hover:to-cyan-400 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-            >
-              Start Free Today
-            </Link>
-            <Link
-              to="/signin"
-              className="inline-block px-10 py-4 bg-white/10 text-white font-semibold rounded-xl hover:bg-white/20 transition-all duration-200 backdrop-blur-sm border border-white/20"
-            >
-              View Demo
-            </Link>
-          </div>
-          <p className="text-sky-200 text-sm mt-6">No credit card required • Free forever plan available</p>
-        </div>
-    </div >
-      </section >
-    </div >
-
-
-
-
-    <footer className="bg-slate-50 py-16">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="flex items-center mb-8 md:mb-0">
-            <div className="text-sky-600 h-10 w-10">
-              <NeuroIcon />
-            </div>
-            <span className="ml-3 text-xl font-bold bg-gradient-to-r from-sky-700 to-cyan-700 bg-clip-text text-transparent">NeuroNote</span>
-          </div>
-          <div className="flex items-center space-x-8">
-            <a href="#" className="text-slate-600 hover:text-sky-600 transition-colors">Privacy</a>
-            <a href="#" className="text-slate-600 hover:text-sky-600 transition-colors">Terms</a>
-            <a href="#" className="text-slate-600 hover:text-sky-600 transition-colors">Support</a>
-          </div>
-        </div>
-        <div className="border-t border-slate-200 mt-12 pt-8 text-center">
-          <p className="text-slate-500">
-            &copy; {new Date().getFullYear()} NeuroNote. All rights reserved. Made with ❤️ for knowledge seekers.
-          </p>
-        </div>
-      </div>
-    </footer>
-    </div >
+    </div>
   );
 }
