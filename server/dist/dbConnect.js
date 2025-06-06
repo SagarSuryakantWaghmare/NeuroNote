@@ -15,13 +15,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // const conn=await mongoose.connect(process.env.MONGODB_URL as string);
-        // const conn=await mongoose.connect("mongodb+srv://sagarwaghmare1384:k5Pja5QmixtFSeDE@neuronote.3rfvhe8.mongodb.net/");
-        const conn = yield mongoose_1.default.connect("mongodb://localhost:27017/neuronote");
-        console.log(`MongoDB Connected: ${conn.connection.host}`);
+        // Try Atlas first, then fallback to localhost
+        let conn;
+        try {
+            conn = yield mongoose_1.default.connect("mongodb+srv://sagarwaghmare1384:k5Pja5QmixtFSeDE@neuronote.3rfvhe8.mongodb.net/");
+            console.log(`MongoDB Atlas Connected: ${conn.connection.host}`);
+        }
+        catch (atlasError) {
+            console.log('Atlas connection failed, trying localhost...');
+            conn = yield mongoose_1.default.connect("mongodb://localhost:27017/neuronote");
+            console.log(`MongoDB Local Connected: ${conn.connection.host}`);
+        }
     }
     catch (error) {
         console.log(`Error: ${error.message}`);
+        console.log('Please ensure MongoDB is running locally or Atlas IP is whitelisted');
         process.exit(1);
     }
 });
