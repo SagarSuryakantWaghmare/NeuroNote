@@ -72,13 +72,12 @@ export function Sidebar() {
             `}>
                 {/* Content layout differs for mobile vs desktop */}
                 {isMobile ? (
-                    <div className="p-4 pt-14">
-                        {/* Mobile sidebar - vertical layout when open */}
+                    <div className="p-4 pt-14">                        {/* Mobile sidebar - vertical layout when open */}
                         <div className="flex items-center mb-6">
-                            <div className="flex-shrink-0">
+                            <div className="flex-shrink-0 text-sky-600">
                                 <NeuroIcon />
                             </div>
-                            <div className="text-xl font-bold pl-3">NeuroNote</div>
+                            <div className="text-xl font-bold pl-3 bg-gradient-to-r from-sky-700 to-cyan-700 bg-clip-text text-transparent">NeuroNote</div>
                         </div>
                         
                         {/* Navigation items */}

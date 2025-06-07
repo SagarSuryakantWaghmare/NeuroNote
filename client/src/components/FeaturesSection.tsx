@@ -1,4 +1,5 @@
 interface Feature {
+    //@ts-ignore
   icon: JSX.Element;
   title: string;
   description: string;

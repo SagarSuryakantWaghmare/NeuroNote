@@ -10,11 +10,11 @@ interface InputProps {
 export const Input = forwardRef<HTMLInputElement, InputProps>(
     ({ onChange, placeholder, value, type = "text" }, ref) => {
         return(
-            <div className="w-full mb-4">
+            <div className="w-full">
                 <input 
                     placeholder={placeholder} 
                     type={type} 
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" 
+                    className="w-full px-4 py-3 border border-sky-200 rounded-xl focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all duration-200 bg-sky-50/30 hover:bg-sky-50/50 focus:bg-white placeholder-slate-400" 
                     onChange={onChange}
                     value={value}
                     ref={ref}
