@@ -2,42 +2,72 @@ import { useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { NeuroIcon } from "../icons/NeuroIcon";
+import toast, { Toaster } from 'react-hot-toast';
 
 export function Signin() {
     const usernameRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
-    
-    async function handleSignin() {
+      async function handleSignin() {
         try {
             setIsLoading(true);
             const username = usernameRef.current?.value;
             const password = passwordRef.current?.value;
             
             if (!username || !password) {
-                alert("Please enter both username and password");
+                toast.error("Please enter both username and password");
                 setIsLoading(false);
                 return;
             }
-              const response = await axios.post(`/api/v1/signin`, {
+
+            const response = await axios.post(`/api/v1/signin`, {
                 username,
                 password
-            });            if (response.data.token) {
+            });
+
+            if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
-                navigate('/dashboard');
+                toast.success("Welcome back! Redirecting to dashboard...");
+                setTimeout(() => {
+                    navigate('/dashboard');
+                }, 1000);
             } else {
-                alert("Login failed. Please check your credentials.");
+                toast.error("Login failed. Please check your credentials.");
             }
         } catch (error) {
             console.error("Login error:", error);
-            alert("Login failed. Please try again.");
+            toast.error("Login failed. Please try again.");
         } finally {
             setIsLoading(false);
         }
-    }
-      return (
+    }      return (
         <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-cyan-50 flex items-center justify-center p-6">
+            <Toaster 
+                position="top-center"
+                toastOptions={{
+                    duration: 4000,
+                    style: {
+                        background: '#ffffff',
+                        color: '#334155',
+                        border: '1px solid #e0f2fe',
+                        borderRadius: '12px',
+                        boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                    },
+                    success: {
+                        iconTheme: {
+                            primary: '#0ea5e9',
+                            secondary: '#ffffff',
+                        },
+                    },
+                    error: {
+                        iconTheme: {
+                            primary: '#ef4444',
+                            secondary: '#ffffff',
+                        },
+                    },
+                }}
+            />
             <div className="w-full max-w-md">
                 {/* Header */}
                 <div className="text-center mb-8">

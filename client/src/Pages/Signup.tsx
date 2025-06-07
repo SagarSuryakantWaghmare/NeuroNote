@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { NeuroIcon } from "../icons/NeuroIcon";
+import toast, { Toaster } from 'react-hot-toast';
 export function Signup() {
     const usernameRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
@@ -13,7 +14,7 @@ export function Signup() {
             const password = passwordRef.current?.value;
             
             if (!username || !password) {
-                alert("Please enter both username and password");
+                toast.error("Please enter both username and password");
                 setIsLoading(false);
                 return;
             }
@@ -29,23 +30,57 @@ export function Signup() {
             });
             
             console.log("Signup response:", response.data);
-            alert("Signup successful!");
-            
+            toast.success("Account created successfully! Redirecting to sign in...");
+
             // Reset form and navigate to sign in
             if (usernameRef.current) usernameRef.current.value = "";
             if (passwordRef.current) passwordRef.current.value = "";
             
-            // Navigate to sign in page after successful signup
-            navigate('/signin');
-        } catch (error) {
+            // Navigate to sign in page after successful signup with delay
+            setTimeout(() => {
+                navigate('/signin');
+            }, 1500);
+        } catch (error: any) {
             console.error("Signup error:", error);
-            alert("Signup failed. Please try again.");
+            
+            // More specific error handling
+            if (error.response?.status === 409) {
+                toast.error("Username already exists. Please choose a different one.");
+            } else if (error.response?.status === 400) {
+                toast.error("Please provide valid username and password.");
+            } else {
+                toast.error("Signup failed. Please try again.");
+            }
         } finally {
             setIsLoading(false);
         }
-    }
-      return (
+    }      return (
         <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-cyan-50 flex items-center justify-center p-6">
+            <Toaster 
+                position="top-center"
+                toastOptions={{
+                    duration: 4000,
+                    style: {
+                        background: '#ffffff',
+                        color: '#334155',
+                        border: '1px solid #e0f2fe',
+                        borderRadius: '12px',
+                        boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                    },
+                    success: {
+                        iconTheme: {
+                            primary: '#0ea5e9',
+                            secondary: '#ffffff',
+                        },
+                    },
+                    error: {
+                        iconTheme: {
+                            primary: '#ef4444',
+                            secondary: '#ffffff',
+                        },
+                    },
+                }}
+            />
             <div className="w-full max-w-md">
                 {/* Header */}
                 <div className="text-center mb-8">
