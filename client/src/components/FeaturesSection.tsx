@@ -44,7 +44,7 @@ const features: Feature[] = [
 
 export function FeaturesSection() {
   return (
-    <section className="bg-gradient-to-r from-sky-50 to-cyan-50 py-24">
+    <section className=" bg-gradient-to-r from-sky-50 to-cyan-50 py-24">
       <div className="container mx-auto px-6">
         <div className="text-center mb-20">
           <div className="inline-flex items-center px-4 py-2 bg-sky-100 rounded-full text-sky-700 text-sm font-medium mb-6">
@@ -60,8 +60,9 @@ export function FeaturesSection() {
             NeuroNote doesn't just store your links—it creates connections, surfaces insights, and turns information overload into organized knowledge.
           </p>
         </div>
+        <div className="max-w-7xl mx-auto">
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid  grid-cols-1 md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <div
               key={index}
@@ -74,6 +75,7 @@ export function FeaturesSection() {
               <p className="text-slate-600 leading-relaxed">{feature.description}</p>
             </div>
           ))}
+        </div>
         </div>
       </div>
     </section>

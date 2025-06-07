@@ -48,7 +48,7 @@ export function HowItWorksSection() {
             Building your knowledge hub has never been easier. Get started in minutes, not hours.
           </p>
         </div>
-
+        <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {steps.map((step, index) => (
             <div key={index} className="text-center group">
@@ -59,6 +59,7 @@ export function HowItWorksSection() {
               <p className="text-slate-600 leading-relaxed">{step.description}</p>
             </div>
           ))}
+        </div>
         </div>
       </div>
     </section>

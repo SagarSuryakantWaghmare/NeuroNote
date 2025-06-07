@@ -5,8 +5,8 @@ import { TwitterIcon } from '../icons/TwitterIcon';
 
 export function HeroSection() {
   return (
-    <section className="container mx-auto px-6 pt-16 pb-24">
-      <div className="flex flex-col md:flex-row items-center">
+    <section className="container max-w-7xl mx-auto px-6 pt-16 pb-24">
+      <div className="flex flex-col md:flex-row items-center ">
         <div className="w-full md:w-1/2 md:pr-10">
           <div className="inline-flex items-center px-4 py-2 bg-sky-100 rounded-full text-sky-700 text-sm font-medium mb-6">
             <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
