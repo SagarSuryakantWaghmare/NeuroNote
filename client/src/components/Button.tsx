@@ -10,11 +10,11 @@ interface ButtonProps {
 }
 
 const variantClasses = {
-  "primary": 'bg-purple-600 hover:bg-purple-700 text-white',
-  "secondary": 'bg-gray-100 hover:bg-gray-200 text-gray-800 border border-gray-300',
+  "primary": 'bg-gradient-to-r from-sky-600 to-cyan-600 hover:from-sky-700 hover:to-cyan-700 text-white shadow-lg hover:shadow-xl transform hover:-translate-y-0.5',
+  "secondary": 'bg-white hover:bg-sky-50 text-sky-700 border border-sky-200 hover:border-sky-300 shadow-lg hover:shadow-xl',
 }
 
-const defaultStyles = "px-3 py-2 md:px-4 md:py-2 rounded-md font-medium text-xs md:text-sm flex items-center justify-center gap-1 md:gap-2 transition-colors duration-200 shadow-sm whitespace-nowrap";
+const defaultStyles = "px-3 py-2 md:px-4 md:py-2 rounded-lg font-medium text-xs md:text-sm flex items-center justify-center gap-1 md:gap-2 transition-all duration-200 whitespace-nowrap";
 
 export function Button({variant, text, startIcon, onClick,fullwidth,loading}: ButtonProps) {
    return (

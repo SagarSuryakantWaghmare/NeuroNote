@@ -140,7 +140,7 @@ export function Dashboard() {
     <>
       <div className="flex">
         <Sidebar />
-        <div className={`p-4 md:p-6 ${!isMobile ? "md:ml-72" : "mt-16"} min-h-screen w-full bg-gray-50`}>
+        <div className={`p-4 md:p-6 ${!isMobile ? "md:ml-72" : "mt-16"} min-h-screen w-full bg-gradient-to-br from-sky-50 via-blue-50 to-cyan-50`}>
           <CreateContentModal 
             open={modalOpen} 
             onClose={() => { 
@@ -151,9 +151,8 @@ export function Dashboard() {
           />
 
           {/* Content area with proper spacing for top nav on mobile */}
-          <div className="md:max-w-7xl mx-auto md:pt-0">
-            <div className="flex flex-col md:flex-row justify-between items-center mb-6 md:mb-8 gap-4">
-              <h1 className="text-xl md:text-2xl font-bold text-gray-800">Your Content</h1>
+          <div className="md:max-w-7xl mx-auto md:pt-0">            <div className="flex flex-col md:flex-row justify-between items-center mb-6 md:mb-8 gap-4">
+              <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-slate-800 via-sky-800 to-cyan-800 bg-clip-text text-transparent">Your Content</h1>
               <div className="flex gap-2 md:gap-3">
                 <Button
                   onClick={() => { setModalOpen(true) }}
@@ -168,14 +167,30 @@ export function Dashboard() {
                 />
               </div>
             </div>
-            
-            {loading ? (
+              {loading ? (
               <div className="flex justify-center items-center h-64">
-                <p className="text-gray-500 text-lg">Loading your content...</p>
+                <div className="text-center">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600 mx-auto mb-4"></div>
+                  <p className="text-slate-600 text-lg">Loading your content...</p>
+                </div>
               </div>
             ) : contents.length === 0 ? (
               <div className="flex justify-center items-center h-64">
-                <p className="text-gray-500 text-lg">No content available. Click "Add content" to add your first item.</p>
+                <div className="text-center bg-white rounded-2xl shadow-lg border border-sky-100 p-8 max-w-md">
+                  <div className="w-16 h-16 bg-gradient-to-br from-sky-100 to-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-slate-800 mb-2">No content yet</h3>
+                  <p className="text-slate-600 mb-4">Start building your second brain by adding your first piece of content.</p>
+                  <button
+                    onClick={() => setModalOpen(true)}
+                    className="px-6 py-2 bg-gradient-to-r from-sky-600 to-cyan-600 text-white rounded-lg hover:from-sky-700 hover:to-cyan-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+                  >
+                    Add Your First Content
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">

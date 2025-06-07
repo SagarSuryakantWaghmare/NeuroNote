@@ -44,29 +44,27 @@ export function Card({ title, link, type }: CardProps) {
         }
     }, [link, type]);
     return (
-        <div className="w-full">
-            {/* Card Container */}
-            <div className="p-4 bg-white rounded-md border-gray-200 border overflow-hidden">
+        <div className="w-full">            {/* Card Container */}
+            <div className="p-4 bg-white rounded-2xl border border-sky-100 shadow-lg hover:shadow-xl transition-all duration-200 hover:-translate-y-1 overflow-hidden">
                 {/* Header Section */}
                 <div className="flex justify-between">
                     {/* Left Section: Title with Icon */}                    <div className="flex items-center text-md max-w-[80%]">
-                        <div className="text-gray-500 pr-2 flex-shrink-0">
+                        <div className="text-sky-600 pr-2 flex-shrink-0">
                             {/* Share Icon preceding the title */}
                             <ShareIcon />
                         </div>
-                        <div className="font-medium text-gray-800 truncate" title={title}>
+                        <div className="font-medium text-slate-800 truncate" title={title}>
                             {title}
                         </div>
                     </div>
-                    {/* Right Section: Links with Icons */}
-                    <div className="flex items-center">
-                        <div className="pr-2 text-gray-500">
+                    {/* Right Section: Links with Icons */}                    <div className="flex items-center">
+                        <div className="pr-2 text-sky-600 hover:text-sky-700 transition-colors duration-200">
                             {/* Clickable Share Icon that opens the link */}
                             <a href={link} target="_blank">
                                 <ShareIcon />
                             </a>
                         </div>
-                        <div className="text-gray-500">
+                        <div className="text-sky-600">
                             {/* Placeholder for another Share Icon */}
                             <ShareIcon />
                         </div>
