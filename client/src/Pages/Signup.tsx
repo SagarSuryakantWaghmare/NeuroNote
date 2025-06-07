@@ -3,11 +3,13 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { NeuroIcon } from "../icons/NeuroIcon";
 import toast, { Toaster } from 'react-hot-toast';
+
 export function Signup() {
     const usernameRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();      async function handleSignup() {
+    const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();async function handleSignup() {
         try {
             setIsLoading(true);
             const username = usernameRef.current?.value;
