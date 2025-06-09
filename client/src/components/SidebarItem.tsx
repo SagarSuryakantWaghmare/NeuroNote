@@ -15,18 +15,20 @@ export function SidebarItem({ text, icon, collapsed = false, horizontal = false,
         <>            <div 
                 className={`
                     flex items-center ${collapsed ? 'justify-center' : 'justify-start'} 
-                    ${horizontal ? 'p-1.5 rounded-full' : 'p-2.5 rounded-md'} 
-                    cursor-pointer transition-all
-                    hover:bg-gray-100 active:bg-gray-200
+                    ${horizontal ? 'p-2 rounded-xl' : 'p-3 rounded-xl'} 
+                    cursor-pointer transition-all duration-200 group
+                    hover:bg-gradient-to-r hover:from-sky-50 hover:to-cyan-50 
+                    active:bg-gradient-to-r active:from-sky-100 active:to-cyan-100
+                    border border-transparent hover:border-sky-100
                 `}
                 title={collapsed ? text : undefined}
                 onClick={() => to && navigate(to)}
             >
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 text-sky-600 group-hover:text-sky-700 transition-colors duration-200">
                     {icon}
                 </div>
                 {!collapsed && (
-                    <span className="ml-3 font-medium text-gray-700">{text}</span>
+                    <span className="ml-3 font-medium text-slate-700 group-hover:text-slate-800 transition-colors duration-200">{text}</span>
                 )}
             </div>
         </>

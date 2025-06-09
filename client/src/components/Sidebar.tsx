@@ -88,14 +88,13 @@ export function Sidebar() {
                     </div>
                 ) : (
                     /* Desktop sidebar */
-                    <div className={`p-4 ${!isOpen && "md:px-2 md:py-6"}`}>
-                        {/* Logo and title */}
+                    <div className={`p-4 ${!isOpen && "md:px-2 md:py-6"}`}>                        {/* Logo and title */}
                         <div className={`flex items-center ${!isOpen ? "md:justify-center" : "mb-8"}`}>
-                            <div className="flex-shrink-0">
+                            <div className="flex-shrink-0 text-sky-600">
                                 <NeuroIcon />
                             </div>
                             {isOpen && (
-                                <div className="text-xl font-bold pl-3">NeuroNote</div>
+                                <div className="text-xl font-bold pl-3 bg-gradient-to-r from-sky-700 to-cyan-700 bg-clip-text text-transparent">NeuroNote</div>
                             )}
                         </div>
                         
