@@ -6,7 +6,12 @@ import { HamburgerIcon } from "../icons/HamburgerIcon";
 import { CrossIcon } from "../icons/CrossIcon";
 import { NeuroIcon } from "../icons/NeuroIcon";
 
-export function Sidebar() {
+interface SidebarProps {
+    activeFilter?: "all" | "youtube" | "twitter";
+    onFilterChange?: (filter: "all" | "youtube" | "twitter") => void;
+}
+
+export function Sidebar({ activeFilter = "all", onFilterChange }: SidebarProps) {
     const [isOpen, setIsOpen] = useState(true);
     const [isMobile, setIsMobile] = useState(false);
 
@@ -46,11 +51,32 @@ export function Sidebar() {
                                 <NeuroIcon />
                             </div>
                             <div className="text-lg font-bold pl-3 bg-gradient-to-r from-sky-700 to-cyan-700 bg-clip-text text-transparent">NeuroNote</div>
-                        </div>
-                        <div className="flex gap-6 py-2 px-3 mr-10">
-                            <SidebarItem text="Home" icon={<NeuroIcon />} collapsed={true} horizontal={true} to="/" />
-                            <SidebarItem text="Twitter" icon={<TwitterIcon />} collapsed={true} horizontal={true} />
-                            <SidebarItem text="YouTube" icon={<YoutubeIcon />} collapsed={true} horizontal={true} />
+                        </div>                        <div className="flex gap-6 py-2 px-3 mr-10">
+                            <SidebarItem 
+                                text="All" 
+                                icon={<NeuroIcon />} 
+                                collapsed={true} 
+                                horizontal={true} 
+                                to="/" 
+                                active={activeFilter === "all"}
+                                onClick={() => onFilterChange?.("all")}
+                            />
+                            <SidebarItem 
+                                text="Twitter" 
+                                icon={<TwitterIcon />} 
+                                collapsed={true} 
+                                horizontal={true}
+                                active={activeFilter === "twitter"}
+                                onClick={() => onFilterChange?.("twitter")}
+                            />
+                            <SidebarItem 
+                                text="YouTube" 
+                                icon={<YoutubeIcon />} 
+                                collapsed={true} 
+                                horizontal={true}
+                                active={activeFilter === "youtube"}
+                                onClick={() => onFilterChange?.("youtube")}
+                            />
                         </div>
                     </div>
                 </div>
@@ -78,12 +104,30 @@ export function Sidebar() {
                                 <NeuroIcon />
                             </div>
                             <div className="text-xl font-bold pl-3 bg-gradient-to-r from-sky-700 to-cyan-700 bg-clip-text text-transparent">NeuroNote</div>
-                        </div>
-                        
+                        </div>                        
                         {/* Navigation items */}
                         <div className="space-y-3">
-                            <SidebarItem text="Twitter" icon={<TwitterIcon />} collapsed={false} />
-                            <SidebarItem text="YouTube" icon={<YoutubeIcon />} collapsed={false} />
+                            <SidebarItem 
+                                text="All Content" 
+                                icon={<NeuroIcon />} 
+                                collapsed={false}
+                                active={activeFilter === "all"}
+                                onClick={() => onFilterChange?.("all")}
+                            />
+                            <SidebarItem 
+                                text="Twitter" 
+                                icon={<TwitterIcon />} 
+                                collapsed={false}
+                                active={activeFilter === "twitter"}
+                                onClick={() => onFilterChange?.("twitter")}
+                            />
+                            <SidebarItem 
+                                text="YouTube" 
+                                icon={<YoutubeIcon />} 
+                                collapsed={false}
+                                active={activeFilter === "youtube"}
+                                onClick={() => onFilterChange?.("youtube")}
+                            />
                         </div>
                     </div>
                 ) : (
@@ -96,12 +140,30 @@ export function Sidebar() {
                             {isOpen && (
                                 <div className="text-xl font-bold pl-3 bg-gradient-to-r from-sky-700 to-cyan-700 bg-clip-text text-transparent">NeuroNote</div>
                             )}
-                        </div>
-                        
+                        </div>                        
                         {/* Navigation items with proper spacing */}
                         <div className="space-y-2 mt-6">
-                            <SidebarItem text="Twitter" icon={<TwitterIcon />} collapsed={!isOpen} />
-                            <SidebarItem text="YouTube" icon={<YoutubeIcon />} collapsed={!isOpen} />
+                            <SidebarItem 
+                                text="All Content" 
+                                icon={<NeuroIcon />} 
+                                collapsed={!isOpen}
+                                active={activeFilter === "all"}
+                                onClick={() => onFilterChange?.("all")}
+                            />
+                            <SidebarItem 
+                                text="Twitter" 
+                                icon={<TwitterIcon />} 
+                                collapsed={!isOpen}
+                                active={activeFilter === "twitter"}
+                                onClick={() => onFilterChange?.("twitter")}
+                            />
+                            <SidebarItem 
+                                text="YouTube" 
+                                icon={<YoutubeIcon />} 
+                                collapsed={!isOpen}
+                                active={activeFilter === "youtube"}
+                                onClick={() => onFilterChange?.("youtube")}
+                            />
                         </div>
                     </div>
                 )}
