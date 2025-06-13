@@ -7,6 +7,7 @@ import { ShareIcon } from "../icons/ShareIcon";
 import { Sidebar } from "../components/Sidebar";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
 
 declare global {
   interface Window {
@@ -111,15 +112,39 @@ export function Dashboard() {
       );
       
       if (response.data && response.data.hash) {
-        const shareUrl = `${window.location.origin}/share/${response.data.hash}`;
-        
-        // Copy to clipboard
+        const shareUrl = `${window.location.origin}/share/${response.data.hash}`;        // Copy to clipboard
         try {
           await navigator.clipboard.writeText(shareUrl);
-          alert(`Share link copied to clipboard!\n${shareUrl}`);
+          toast.success('Share brain link copied to clipboard!', {
+            duration: 4000,
+            style: {
+              background: '#ffffff',
+              color: '#334155',
+              border: '1px solid #e0f2fe',
+              borderRadius: '12px',
+              boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            },
+            iconTheme: {
+              primary: '#0ea5e9',
+              secondary: '#ffffff',
+            },
+          });
         } catch (clipboardError) {
           // Fallback if clipboard API fails
-          alert(`Share link: ${shareUrl}`);
+          toast.success(`Share brain link created: ${shareUrl}`, {
+            duration: 6000,
+            style: {
+              background: '#ffffff',
+              color: '#334155',
+              border: '1px solid #e0f2fe',
+              borderRadius: '12px',
+              boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            },
+            iconTheme: {
+              primary: '#0ea5e9',
+              secondary: '#ffffff',
+            },
+          });
         }
         
         console.log("Share URL:", shareUrl);
@@ -128,9 +153,21 @@ export function Dashboard() {
       console.error("Error sharing content:", error);
       if (axios.isAxiosError(error) && error.response?.status === 401) {
         localStorage.removeItem('token');
-        navigate('/signin');
-      } else {
-        alert("Failed to create share link. Please try again.");
+        navigate('/signin');      } else {
+        toast.error("Failed to create share link. Please try again.", {
+          duration: 4000,
+          style: {
+            background: '#ffffff',
+            color: '#334155',
+            border: '1px solid #e0f2fe',
+            borderRadius: '12px',
+            boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          },
+          iconTheme: {
+            primary: '#ef4444',
+            secondary: '#ffffff',
+          },
+        });
       }
     } finally {
       setLoading(false);
@@ -147,9 +184,33 @@ export function Dashboard() {
   // Handle filter change
   const handleFilterChange = (filter: "all" | "youtube" | "twitter") => {
     setActiveFilter(filter);
-  };
-  return (
+  };  return (
     <>
+      <Toaster 
+        position="top-center"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#ffffff',
+            color: '#334155',
+            border: '1px solid #e0f2fe',
+            borderRadius: '12px',
+            boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          },
+          success: {
+            iconTheme: {
+              primary: '#0ea5e9',
+              secondary: '#ffffff',
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: '#ef4444',
+              secondary: '#ffffff',
+            },
+          },
+        }}
+      />
       <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-sky-50/50 to-cyan-50/80">
         <Sidebar activeFilter={activeFilter} onFilterChange={handleFilterChange} />
         

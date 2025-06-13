@@ -3,6 +3,7 @@ import { CrossIcon } from "../icons/CrossIcon"; // Importing the close icon
 import { Button } from "./Button"; // Importing the Button component
 import { Input } from "./Input"; // Importing the Input component for form inputs
 import axios from "axios"; // Importing axios for HTTP requests
+import toast from 'react-hot-toast'; // Importing toast for notifications
 
 // Union type to represent different types of content
 type ContentType = "youtube" | "twitter";
@@ -24,15 +25,27 @@ export function CreateContentModal({ open, onClose }: CreateContentModalProps) {
     const titleRef = useRef<HTMLInputElement>(null);
     const linkRef = useRef<HTMLInputElement>(null);
     // State to manage the selected content type
-    const [type, setType] = useState<ContentType>(ContentTypeValues.Youtube);
-
-    // Function to handle adding new content
+    const [type, setType] = useState<ContentType>(ContentTypeValues.Youtube);    // Function to handle adding new content
     async function addContent() {
         const title = titleRef.current?.value; // Getting the title value from the input
-        const link = linkRef.current?.value; // Getting the link value from the input        // Making a POST request to add new content
-        try {
-            if (!link) {
-                alert("Please enter a link");
+        const link = linkRef.current?.value; // Getting the link value from the input
+        
+        // Making a POST request to add new content
+        try {            if (!link) {
+                toast.error("Please enter a link", {
+                    duration: 4000,
+                    style: {
+                        background: '#ffffff',
+                        color: '#334155',
+                        border: '1px solid #e0f2fe',
+                        borderRadius: '12px',
+                        boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                    },
+                    iconTheme: {
+                        primary: '#ef4444',
+                        secondary: '#ffffff',
+                    },
+                });
                 return;
             }
             
@@ -45,17 +58,45 @@ export function CreateContentModal({ open, onClose }: CreateContentModalProps) {
                     "Authorization": localStorage.getItem("token") || "" // Including the authorization token
                 }
             });
+              // Show success message
+            toast.success("Content added successfully!", {
+                duration: 4000,
+                style: {
+                    background: '#ffffff',
+                    color: '#334155',
+                    border: '1px solid #e0f2fe',
+                    borderRadius: '12px',
+                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                },
+                iconTheme: {
+                    primary: '#0ea5e9',
+                    secondary: '#ffffff',
+                },
+            });
             
             // Refresh the page to show new content
             window.location.reload();
         } catch (error) {
             console.error("Error adding content:", error);
-            alert("Error adding content. Please try again.");
-        }
-
-        // Closing the modal after adding content
+            toast.error("Error adding content. Please try again.", {
+                duration: 4000,
+                style: {
+                    background: '#ffffff',
+                    color: '#334155',
+                    border: '1px solid #fecaca',
+                    borderRadius: '12px',
+                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                },
+                iconTheme: {
+                    primary: '#ef4444',
+                    secondary: '#ffffff',
+                },
+            });
+        }        // Closing the modal after adding content
         onClose();
-    }    return (
+    }
+    
+    return (
         <div>
             {open && (
                 // Modal background overlay with blur effect
