@@ -148,98 +148,118 @@ export function Dashboard() {
   const handleFilterChange = (filter: "all" | "youtube" | "twitter") => {
     setActiveFilter(filter);
   };
-
   return (
     <>
-      <div className="flex">
+      <div className="flex min-h-screen bg-gradient-to-br from-slate-50 via-sky-50/50 to-cyan-50/80">
         <Sidebar activeFilter={activeFilter} onFilterChange={handleFilterChange} />
-        <div className={`p-4 md:p-6 ${!isMobile ? "md:ml-72" : "mt-16"} min-h-screen w-full bg-gradient-to-br from-sky-50 via-blue-50 to-cyan-50`}>
-          <CreateContentModal 
-            open={modalOpen} 
-            onClose={() => { 
-              setModalOpen(false);
-              // Refresh content list when modal is closed
-              fetchUserContent();
-            }} 
-          />
+        
+        {/* Main content area with responsive spacing */}
+        <div className={`flex-1 transition-all duration-500 ${!isMobile ? "md:ml-72" : ""} min-h-screen`}>
+          <div className="p-4 md:p-8 lg:p-12">
+            <CreateContentModal 
+              open={modalOpen} 
+              onClose={() => { 
+                setModalOpen(false);
+                // Refresh content list when modal is closed
+                fetchUserContent();
+              }} 
+            />
 
-          {/* Content area with proper spacing for top nav on mobile */}
-          <div className="md:max-w-7xl mx-auto md:pt-0">            <div className="flex flex-col md:flex-row justify-between items-center mb-6 md:mb-8 gap-4">
-              <div className="flex flex-col items-center md:items-start">
-                <h1 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-slate-800 via-sky-800 to-cyan-800 bg-clip-text text-transparent">Your Content</h1>
-                {activeFilter !== "all" && (
-                  <div className="flex items-center mt-2">
-                    <span className="text-sm text-slate-600 mr-2">Showing:</span>
-                    <span className="px-3 py-1 bg-gradient-to-r from-sky-100 to-cyan-100 text-sky-700 rounded-full text-sm font-medium capitalize">
-                      {activeFilter} content
-                    </span>
+            {/* Enhanced header section */}
+            <div className="max-w-7xl mx-auto">
+              <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 lg:mb-12 gap-6">
+                <div className="flex flex-col">
+                  <h1 className="text-2xl md:text-3xl xl:text-4xl font-bold bg-gradient-to-r from-slate-800 via-sky-700 to-cyan-700 bg-clip-text text-transparent mb-2">
+                    Your Second Brain
+                  </h1>
+                  <p className="text-slate-600 text-sm md:text-base">
+                    Organize and access your saved content
+                  </p>
+                  
+                  {/* Filter indicator with enhanced styling */}
+                  {activeFilter !== "all" && (
+                    <div className="flex items-center mt-4 p-3 bg-white/80 backdrop-blur-sm rounded-2xl border border-sky-100/50 shadow-sm max-w-fit">
+                      <span className="text-sm text-slate-600 mr-3">Currently viewing:</span>
+                      <span className="px-4 py-2 bg-gradient-to-r from-sky-100 to-cyan-100 text-sky-700 rounded-xl text-sm font-semibold capitalize shadow-sm">
+                        {activeFilter} content
+                      </span>
+                      <button
+                        onClick={() => setActiveFilter("all")}
+                        className="ml-3 px-3 py-1 text-sm text-sky-600 hover:text-sky-700 hover:bg-sky-50 rounded-lg transition-all duration-200"
+                      >
+                        Clear filter
+                      </button>
+                    </div>
+                  )}
+                </div>
+                
+                {/* Action buttons with enhanced styling */}
+                <div className="flex gap-3 md:gap-4">
+                  <Button
+                    onClick={() => { setModalOpen(true) }}
+                    variant="primary"
+                    text="Add Content"
+                    startIcon={<PlusIcon />}
+                  />
+                  <Button
+                    onClick={shareContent}
+                    variant="secondary"
+                    text="Share Brain"
+                    startIcon={<ShareIcon />}
+                  />
+                </div>
+              </div>
+
+              {/* Content area with enhanced states */}
+              {loading ? (
+                <div className="flex justify-center items-center h-96">
+                  <div className="text-center">
+                    <div className="relative w-16 h-16 mx-auto mb-6">
+                      <div className="absolute inset-0 border-4 border-sky-200 rounded-full"></div>
+                      <div className="absolute inset-0 border-4 border-sky-600 rounded-full border-t-transparent animate-spin"></div>
+                    </div>
+                    <h3 className="text-xl font-semibold text-slate-700 mb-2">Loading your content</h3>
+                    <p className="text-slate-500">Please wait while we fetch your saved items...</p>
+                  </div>
+                </div>
+              ) : filteredContents.length === 0 ? (
+                <div className="flex justify-center items-center min-h-96">
+                  <div className="text-center bg-white/90 backdrop-blur-xl rounded-3xl border border-sky-100/50 shadow-xl p-12 max-w-lg mx-4">
+                    <div className="w-20 h-20 bg-gradient-to-br from-sky-100 to-cyan-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+                      <svg className="w-10 h-10 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-800 mb-3">
+                      {activeFilter === "all" ? "No content yet" : `No ${activeFilter} content`}
+                    </h3>
+                    <p className="text-slate-600 mb-8 leading-relaxed">
+                      {activeFilter === "all" 
+                        ? "Your second brain is empty! Start by adding your first piece of content to organize your digital knowledge."
+                        : `You haven't saved any ${activeFilter} content yet. Add some to start building your ${activeFilter} collection.`
+                      }
+                    </p>
                     <button
-                      onClick={() => setActiveFilter("all")}
-                      className="ml-2 text-sm text-sky-600 hover:text-sky-700 underline"
+                      onClick={() => setModalOpen(true)}
+                      className="px-8 py-3 bg-gradient-to-r from-sky-600 to-cyan-600 text-white rounded-2xl hover:from-sky-700 hover:to-cyan-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-semibold"
                     >
-                      Show all
+                      {activeFilter === "all" ? "Add Your First Content" : `Add ${activeFilter} Content`}
                     </button>
                   </div>
-                )}
-              </div>
-              <div className="flex gap-2 md:gap-3">
-                <Button
-                  onClick={() => { setModalOpen(true) }}
-                  variant="primary"
-                  text="Add content"
-                  startIcon={<PlusIcon />}
-                />                <Button
-                  onClick={shareContent}
-                  variant="secondary"
-                  text="Share Brain"
-                  startIcon={<ShareIcon />}
-                />
-              </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 lg:gap-8">
+                  {filteredContents.map((content) => (
+                    <Card
+                      key={content._id}
+                      type={content.type}
+                      link={content.link}
+                      title={content.title}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
-              {loading ? (
-              <div className="flex justify-center items-center h-64">
-                <div className="text-center">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600 mx-auto mb-4"></div>
-                  <p className="text-slate-600 text-lg">Loading your content...</p>
-                </div>
-              </div>            ) : filteredContents.length === 0 ? (
-              <div className="flex justify-center items-center h-64">
-                <div className="text-center bg-white rounded-2xl shadow-lg border border-sky-100 p-8 max-w-md">
-                  <div className="w-16 h-16 bg-gradient-to-br from-sky-100 to-cyan-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg className="w-8 h-8 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                  </div>
-                  <h3 className="text-lg font-semibold text-slate-800 mb-2">
-                    {activeFilter === "all" ? "No content yet" : `No ${activeFilter} content`}
-                  </h3>
-                  <p className="text-slate-600 mb-4">
-                    {activeFilter === "all" 
-                      ? "Start building your second brain by adding your first piece of content."
-                      : `You haven't added any ${activeFilter} content yet. Click "Add content" to get started.`
-                    }
-                  </p>
-                  <button
-                    onClick={() => setModalOpen(true)}
-                    className="px-6 py-2 bg-gradient-to-r from-sky-600 to-cyan-600 text-white rounded-lg hover:from-sky-700 hover:to-cyan-700 transition-all duration-200 shadow-lg hover:shadow-xl"
-                  >
-                    {activeFilter === "all" ? "Add Your First Content" : `Add ${activeFilter} Content`}
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-max">
-                {filteredContents.map((content) => (
-                  <Card
-                    key={content._id}
-                    type={content.type}
-                    link={content.link}
-                    title={content.title}
-                  />
-                ))}
-                {/* <Card type="youtube" title="Youtube main video" link="https://www.youtube.com/watch?v=xGQuT1wm2qk"/> */}
-              </div>
-            )}
           </div>
         </div>
       </div>

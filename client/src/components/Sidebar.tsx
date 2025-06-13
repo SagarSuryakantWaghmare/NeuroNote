@@ -12,7 +12,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ activeFilter = "all", onFilterChange }: SidebarProps) {
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 
     // Check if we're on mobile screen size
@@ -32,141 +32,120 @@ export function Sidebar({ activeFilter = "all", onFilterChange }: SidebarProps) 
         return () => window.removeEventListener('resize', checkIfMobile);
     }, []);
 
-    return (
-        <>            {/* Mobile menu button in top-right corner */}
-            <div className="md:hidden fixed top-4 right-4 z-30">
-                <button 
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="p-2 rounded-lg bg-white shadow-lg border border-sky-100 hover:bg-sky-50 transition-colors duration-200"
-                >
-                    {isOpen ? <CrossIcon /> : <HamburgerIcon />}
-                </button>
-            </div>
-              {/* Mobile horizontal top navigation bar */}
+    // Handle filter change and close mobile menu
+    const handleFilterChange = (filter: "all" | "youtube" | "twitter") => {
+        onFilterChange?.(filter);
+        if (isMobile) {
+            setIsOpen(false);
+        }
+    };    return (
+        <>
+            {/* Mobile hamburger button - positioned top right with improved styling */}
             {isMobile && (
-                <div className="md:hidden fixed top-0 left-0 right-0 bg-gradient-to-r from-white to-sky-50 shadow-lg border-b border-sky-100 z-20 p-2">
-                    <div className="flex items-center justify-between px-2">
-                        <div className="flex items-center">
-                            <div className="text-sky-600">
-                                <NeuroIcon />
+                <div className="fixed top-4 right-4 z-50">
+                    <button 
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="relative p-3 rounded-2xl bg-white/90 backdrop-blur-xl shadow-lg border border-sky-100/50 hover:bg-white transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95"
+                    >
+                        <div className="relative w-6 h-6">
+                            <div className={`absolute inset-0 transition-all duration-300 ${isOpen ? 'opacity-0 rotate-45' : 'opacity-100 rotate-0'}`}>
+                                <HamburgerIcon />
                             </div>
-                            <div className="text-lg font-bold pl-3 bg-gradient-to-r from-sky-700 to-cyan-700 bg-clip-text text-transparent">NeuroNote</div>
-                        </div>                        <div className="flex gap-6 py-2 px-3 mr-10">
-                            <SidebarItem 
-                                text="All" 
-                                icon={<NeuroIcon />} 
-                                collapsed={true} 
-                                horizontal={true} 
-                                to="/" 
-                                active={activeFilter === "all"}
-                                onClick={() => onFilterChange?.("all")}
-                            />
-                            <SidebarItem 
-                                text="Twitter" 
-                                icon={<TwitterIcon />} 
-                                collapsed={true} 
-                                horizontal={true}
-                                active={activeFilter === "twitter"}
-                                onClick={() => onFilterChange?.("twitter")}
-                            />
-                            <SidebarItem 
-                                text="YouTube" 
-                                icon={<YoutubeIcon />} 
-                                collapsed={true} 
-                                horizontal={true}
-                                active={activeFilter === "youtube"}
-                                onClick={() => onFilterChange?.("youtube")}
-                            />
+                            <div className={`absolute inset-0 transition-all duration-300 ${isOpen ? 'opacity-100 rotate-0' : 'opacity-0 -rotate-45'}`}>
+                                <CrossIcon />
+                            </div>
                         </div>
-                    </div>
+                    </button>
                 </div>
             )}
-            
-            {/* Backdrop for mobile */}
+
+            {/* Mobile backdrop with smooth fade */}
             {isMobile && isOpen && (
                 <div 
-                    className="fixed inset-0 bg-black bg-opacity-50 z-20"
+                    className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-all duration-300"
                     onClick={() => setIsOpen(false)}
                 />
             )}
-              {/* Desktop sidebar or mobile dropdown menu */}
-            <div className={`bg-gradient-to-b from-white via-sky-50/50 to-cyan-50/50 shadow-lg border-r border-sky-100 fixed z-25 transition-all duration-300
+
+            {/* Enhanced Sidebar with improved animations */}
+            <div className={`bg-gradient-to-b from-white/95 via-sky-50/80 to-cyan-50/80 backdrop-blur-xl shadow-2xl border-r border-sky-100/50 fixed z-45 transition-all duration-500 ease-out
                 ${isMobile 
-                    ? `top-14 left-0 right-0 w-full overflow-hidden ${isOpen ? "max-h-screen" : "max-h-0"}`
-                    : `h-screen left-0 top-0 ${isOpen ? "w-72" : "w-0 -translate-x-full md:translate-x-0 md:w-16"}`
+                    ? `top-0 left-0 h-full ${isOpen ? "w-80 translate-x-0" : "w-80 -translate-x-full"}`
+                    : `h-screen left-0 top-0 ${isOpen ? "w-72" : "w-16"}`
                 }
             `}>
-                {/* Content layout differs for mobile vs desktop */}
-                {isMobile ? (
-                    <div className="p-4 pt-14">                        {/* Mobile sidebar - vertical layout when open */}
-                        <div className="flex items-center mb-6">
-                            <div className="flex-shrink-0 text-sky-600">
-                                <NeuroIcon />
-                            </div>
-                            <div className="text-xl font-bold pl-3 bg-gradient-to-r from-sky-700 to-cyan-700 bg-clip-text text-transparent">NeuroNote</div>
-                        </div>                        
-                        {/* Navigation items */}
-                        <div className="space-y-3">
-                            <SidebarItem 
-                                text="All Content" 
-                                icon={<NeuroIcon />} 
-                                collapsed={false}
-                                active={activeFilter === "all"}
-                                onClick={() => onFilterChange?.("all")}
-                            />
-                            <SidebarItem 
-                                text="Twitter" 
-                                icon={<TwitterIcon />} 
-                                collapsed={false}
-                                active={activeFilter === "twitter"}
-                                onClick={() => onFilterChange?.("twitter")}
-                            />
-                            <SidebarItem 
-                                text="YouTube" 
-                                icon={<YoutubeIcon />} 
-                                collapsed={false}
-                                active={activeFilter === "youtube"}
-                                onClick={() => onFilterChange?.("youtube")}
-                            />
+                {/* Sidebar content with better spacing */}
+                <div className={`p-6 h-full ${isMobile ? 'pt-20' : ''}`}>
+                    {/* Logo section with improved typography */}
+                    <div className={`flex items-center ${!isOpen && !isMobile ? "justify-center mb-8" : "mb-8"}`}>
+                        <div className="flex-shrink-0 text-sky-600 text-2xl">
+                            <NeuroIcon />
                         </div>
-                    </div>
-                ) : (
-                    /* Desktop sidebar */
-                    <div className={`p-4 ${!isOpen && "md:px-2 md:py-6"}`}>                        {/* Logo and title */}
-                        <div className={`flex items-center ${!isOpen ? "md:justify-center" : "mb-8"}`}>
-                            <div className="flex-shrink-0 text-sky-600">
-                                <NeuroIcon />
+                        {(isOpen || isMobile) && (
+                            <div className="text-2xl font-bold pl-4 bg-gradient-to-r from-sky-700 via-sky-600 to-cyan-600 bg-clip-text text-transparent">
+                                NeuroNote
                             </div>
-                            {isOpen && (
-                                <div className="text-xl font-bold pl-3 bg-gradient-to-r from-sky-700 to-cyan-700 bg-clip-text text-transparent">NeuroNote</div>
-                            )}
-                        </div>                        
-                        {/* Navigation items with proper spacing */}
-                        <div className="space-y-2 mt-6">
-                            <SidebarItem 
-                                text="All Content" 
-                                icon={<NeuroIcon />} 
-                                collapsed={!isOpen}
-                                active={activeFilter === "all"}
-                                onClick={() => onFilterChange?.("all")}
-                            />
-                            <SidebarItem 
-                                text="Twitter" 
-                                icon={<TwitterIcon />} 
-                                collapsed={!isOpen}
-                                active={activeFilter === "twitter"}
-                                onClick={() => onFilterChange?.("twitter")}
-                            />
-                            <SidebarItem 
-                                text="YouTube" 
-                                icon={<YoutubeIcon />} 
-                                collapsed={!isOpen}
-                                active={activeFilter === "youtube"}
-                                onClick={() => onFilterChange?.("youtube")}
-                            />
-                        </div>
+                        )}
                     </div>
-                )}
+                    
+                    {/* Navigation section with better labeling */}
+                    {(isOpen || isMobile) && (
+                        <div className="mb-6">
+                            <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4 px-3">
+                                Content Filter
+                            </h3>
+                        </div>
+                    )}
+                    
+                    {/* Navigation items with enhanced styling */}
+                    <div className="space-y-3">
+                        <SidebarItem 
+                            text="All Content" 
+                            icon={<NeuroIcon />} 
+                            collapsed={!isOpen && !isMobile}
+                            active={activeFilter === "all"}
+                            onClick={() => handleFilterChange("all")}
+                        />
+                        <SidebarItem 
+                            text="Twitter Posts" 
+                            icon={<TwitterIcon />} 
+                            collapsed={!isOpen && !isMobile}
+                            active={activeFilter === "twitter"}
+                            onClick={() => handleFilterChange("twitter")}
+                        />
+                        <SidebarItem 
+                            text="YouTube Videos" 
+                            icon={<YoutubeIcon />} 
+                            collapsed={!isOpen && !isMobile}
+                            active={activeFilter === "youtube"}
+                            onClick={() => handleFilterChange("youtube")}
+                        />
+                    </div>
+
+                    {/* Desktop toggle button */}
+                    {!isMobile && (
+                        <div className="absolute bottom-6 left-0 right-0 px-6">
+                            <button
+                                onClick={() => setIsOpen(!isOpen)}
+                                className="w-full p-3 rounded-xl bg-gradient-to-r from-sky-50 to-cyan-50 hover:from-sky-100 hover:to-cyan-100 border border-sky-100 transition-all duration-300 group"
+                                title={isOpen ? "Collapse sidebar" : "Expand sidebar"}
+                            >
+                                <div className={`flex items-center ${isOpen ? 'justify-between' : 'justify-center'}`}>
+                                    {isOpen && (
+                                        <span className="text-sm font-medium text-slate-700">
+                                            Collapse
+                                        </span>
+                                    )}
+                                    <div className={`text-slate-600 transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
+                                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                        </svg>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
         </>
     );
