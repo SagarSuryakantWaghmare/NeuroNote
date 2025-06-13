@@ -39,10 +39,9 @@ export function Sidebar({ activeFilter = "all", onFilterChange }: SidebarProps) 
             setIsOpen(false);
         }
     };    return (
-        <>
-            {/* Mobile hamburger button - positioned top right with improved styling */}
+        <>            {/* Mobile hamburger button - positioned top right with improved styling */}
             {isMobile && (
-                <div className="fixed top-4 right-4 z-50">
+                <div className="fixed top-4 right-4 z-[60]">
                     <button 
                         onClick={() => setIsOpen(!isOpen)}
                         className="relative p-3 rounded-2xl bg-white/90 backdrop-blur-xl shadow-lg border border-sky-100/50 hover:bg-white transition-all duration-300 hover:shadow-xl hover:scale-105 active:scale-95"
@@ -57,25 +56,20 @@ export function Sidebar({ activeFilter = "all", onFilterChange }: SidebarProps) 
                         </div>
                     </button>
                 </div>
-            )}
-
-            {/* Mobile backdrop with smooth fade */}
+            )}            {/* Mobile backdrop with smooth fade */}
             {isMobile && isOpen && (
                 <div 
-                    className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-all duration-300"
+                    className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[45] transition-all duration-300"
                     onClick={() => setIsOpen(false)}
                 />
-            )}
-
-            {/* Enhanced Sidebar with improved animations */}
-            <div className={`bg-gradient-to-b from-white/95 via-sky-50/80 to-cyan-50/80 backdrop-blur-xl shadow-2xl border-r border-sky-100/50 fixed z-45 transition-all duration-500 ease-out
+            )}            {/* Enhanced Sidebar with improved animations */}
+            <div className={`bg-white/98 backdrop-blur-xl shadow-2xl border-r border-sky-100/50 fixed z-[50] transition-all duration-500 ease-out
                 ${isMobile 
                     ? `top-0 left-0 h-full ${isOpen ? "w-80 translate-x-0" : "w-80 -translate-x-full"}`
                     : `h-screen left-0 top-0 ${isOpen ? "w-72" : "w-16"}`
                 }
-            `}>
-                {/* Sidebar content with better spacing */}
-                <div className={`p-6 h-full ${isMobile ? 'pt-20' : ''}`}>
+            `}>                {/* Sidebar content with better spacing */}
+                <div className={`p-6 h-full ${isMobile ? 'pt-20 bg-gradient-to-b from-white via-sky-50/30 to-cyan-50/30' : ''}`}>
                     {/* Logo section with improved typography */}
                     <div className={`flex items-center ${!isOpen && !isMobile ? "justify-center mb-8" : "mb-8"}`}>
                         <div className="flex-shrink-0 text-sky-600 text-2xl">

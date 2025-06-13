@@ -185,9 +185,11 @@ export function Dashboard() {
   const handleFilterChange = (filter: "all" | "youtube" | "twitter") => {
     setActiveFilter(filter);
   };  return (
-    <>
-      <Toaster 
+    <>      <Toaster 
         position="top-center"
+        containerStyle={{
+          zIndex: 9999
+        }}
         toastOptions={{
           duration: 4000,
           style: {

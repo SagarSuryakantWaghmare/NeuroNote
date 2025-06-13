@@ -99,10 +99,9 @@ export function CreateContentModal({ open, onClose }: CreateContentModalProps) {
         <div>
             {open && (
                 // Modal background overlay with blur effect
-                <div>
-                    <div className="w-screen h-screen bg-slate-900/60 backdrop-blur-sm fixed top-0 left-0 z-50 flex justify-center items-center transition-all duration-300"></div>
+                <div>                    <div className="w-screen h-screen bg-slate-900/60 backdrop-blur-sm fixed top-0 left-0 z-[70] flex justify-center items-center transition-all duration-300"></div>
                     {/* Modal content container */}
-                    <div className="w-screen h-screen fixed top-0 left-0 z-50 flex justify-center items-center p-4">
+                    <div className="w-screen h-screen fixed top-0 left-0 z-[70] flex justify-center items-center p-4">
                         <div className="bg-white rounded-3xl shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto border border-sky-100/50 backdrop-blur-xl">
                             {/* Modal Header */}
                             <div className="flex justify-between items-center p-6 border-b border-sky-100">
