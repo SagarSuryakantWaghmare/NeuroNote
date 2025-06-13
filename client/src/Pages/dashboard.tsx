@@ -24,7 +24,7 @@ interface ContentItem {
   _id: string;
   link: string;
   title: string;
-  type: "twitter" | "youtube";
+  type: "twitter" | "youtube" | "linkedin" | "instagram";
   userId: string;
   tags: string[];
 }
@@ -36,7 +36,7 @@ export function Dashboard() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [contents, setContents] = useState<ContentItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeFilter, setActiveFilter] = useState<"all" | "youtube" | "twitter">("all");
+  const [activeFilter, setActiveFilter] = useState<"all" | "youtube" | "twitter" | "linkedin" | "instagram">("all");
   const navigate = useNavigate();
   useEffect(() => {
     const handleResize = () => {
@@ -180,9 +180,8 @@ export function Dashboard() {
     if (activeFilter === "all") return true;
     return content.type === activeFilter;
   });
-
   // Handle filter change
-  const handleFilterChange = (filter: "all" | "youtube" | "twitter") => {
+  const handleFilterChange = (filter: "all" | "youtube" | "twitter" | "linkedin" | "instagram") => {
     setActiveFilter(filter);
   };  return (
     <>      <Toaster 

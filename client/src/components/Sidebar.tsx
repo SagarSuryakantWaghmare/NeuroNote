@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { TwitterIcon } from "../icons/TwitterIcon";
 import { YoutubeIcon } from "../icons/YoutubeIcon";
+import { LinkedInIcon } from "../icons/LinkedInIcon";
+import { InstagramIcon } from "../icons/InstagramIcon";
 import { SidebarItem } from "./SidebarItem";
 import { HamburgerIcon } from "../icons/HamburgerIcon";
 import { CrossIcon } from "../icons/CrossIcon";
 import { NeuroIcon } from "../icons/NeuroIcon";
 
 interface SidebarProps {
-    activeFilter?: "all" | "youtube" | "twitter";
-    onFilterChange?: (filter: "all" | "youtube" | "twitter") => void;
+    activeFilter?: "all" | "youtube" | "twitter" | "linkedin" | "instagram";
+    onFilterChange?: (filter: "all" | "youtube" | "twitter" | "linkedin" | "instagram") => void;
 }
 
 export function Sidebar({ activeFilter = "all", onFilterChange }: SidebarProps) {
@@ -30,10 +32,8 @@ export function Sidebar({ activeFilter = "all", onFilterChange }: SidebarProps) 
         window.addEventListener('resize', checkIfMobile);
         
         return () => window.removeEventListener('resize', checkIfMobile);
-    }, []);
-
-    // Handle filter change and close mobile menu
-    const handleFilterChange = (filter: "all" | "youtube" | "twitter") => {
+    }, []);    // Handle filter change and close mobile menu
+    const handleFilterChange = (filter: "all" | "youtube" | "twitter" | "linkedin" | "instagram") => {
         onFilterChange?.(filter);
         if (isMobile) {
             setIsOpen(false);
@@ -90,8 +90,7 @@ export function Sidebar({ activeFilter = "all", onFilterChange }: SidebarProps) 
                             </h3>
                         </div>
                     )}
-                    
-                    {/* Navigation items with enhanced styling */}
+                      {/* Navigation items with enhanced styling */}
                     <div className="space-y-3">
                         <SidebarItem 
                             text="All Content" 
@@ -113,6 +112,20 @@ export function Sidebar({ activeFilter = "all", onFilterChange }: SidebarProps) 
                             collapsed={!isOpen && !isMobile}
                             active={activeFilter === "youtube"}
                             onClick={() => handleFilterChange("youtube")}
+                        />
+                        <SidebarItem 
+                            text="LinkedIn Posts" 
+                            icon={<LinkedInIcon />} 
+                            collapsed={!isOpen && !isMobile}
+                            active={activeFilter === "linkedin"}
+                            onClick={() => handleFilterChange("linkedin")}
+                        />
+                        <SidebarItem 
+                            text="Instagram Posts" 
+                            icon={<InstagramIcon />} 
+                            collapsed={!isOpen && !isMobile}
+                            active={activeFilter === "instagram"}
+                            onClick={() => handleFilterChange("instagram")}
                         />
                     </div>
 

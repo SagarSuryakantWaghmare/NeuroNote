@@ -7,7 +7,7 @@ interface ContentItem {
   _id: string;
   link: string;
   title: string;
-  type: "twitter" | "youtube";
+  type: "twitter" | "youtube" | "linkedin" | "instagram";
   userId: string;
   tags: string[];
 }

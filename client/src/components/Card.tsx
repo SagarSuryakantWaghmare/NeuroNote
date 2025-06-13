@@ -9,18 +9,24 @@ declare global {
                 load: (element?: HTMLElement) => Promise<void>;
             };
         };
+        instgrm?: {
+            Embeds: {
+                process: () => void;
+            };
+        };
     }
 }
 
 interface CardProps {
     title: string; // Title of the card, e.g., video or tweet title
-    link: string; // Link to the content (YouTube or Twitter)
-    type: "twitter" | "youtube"; // Type of the content
+    link: string; // Link to the content (YouTube, Twitter, LinkedIn, or Instagram)
+    type: "twitter" | "youtube" | "linkedin" | "instagram"; // Type of the content
 }
 
-// The Card component represents a styled card that can display either a YouTube video or a Twitter embed based on the type prop.
+// The Card component represents a styled card that can display YouTube videos, Twitter embeds, LinkedIn posts, or Instagram content based on the type prop.
 export function Card({ title, link, type }: CardProps) {
     const tweetRef = useRef<HTMLDivElement>(null);
+    const instagramRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         // Load Twitter widgets script if not already loaded
@@ -42,7 +48,27 @@ export function Card({ title, link, type }: CardProps) {
                 window.twttr.widgets.load(tweetRef.current);
             }
         }
-    }, [link, type]);    return (
+
+        // Load Instagram embed script if not already loaded
+        if (type === "instagram") {
+            if (!document.getElementById('instagram-embed-script')) {
+                const script = document.createElement('script');
+                script.id = 'instagram-embed-script';
+                script.src = '//www.instagram.com/embed.js';
+                script.async = true;
+                document.body.appendChild(script);
+
+                script.onload = () => {
+                    if (window.instgrm && instagramRef.current) {
+                        window.instgrm.Embeds.process();
+                    }
+                };
+            } else if (window.instgrm && instagramRef.current) {
+                // If script already loaded, just process the embed
+                window.instgrm.Embeds.process();
+            }
+        }
+    }, [link, type]);return (
         <div className="w-full">
             {/* Card Container */}
             <div className="group relative overflow-hidden bg-white/80 backdrop-blur-xl rounded-3xl border border-sky-100/50 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02]">
@@ -102,13 +128,112 @@ export function Card({ title, link, type }: CardProps) {
                                     allowFullScreen
                                 ></iframe>
                             </div>
-                        )}
-
-                        {/* Render Twitter embed if type is "twitter" */}
+                        )}                        {/* Render Twitter embed if type is "twitter" */}
                         {type === "twitter" && (
                             <div ref={tweetRef} className="rounded-2xl overflow-hidden">
                                 <blockquote className="twitter-tweet">
                                     <a href={link.replace("x.com", "twitter.com")}></a>
+                                </blockquote>
+                            </div>
+                        )}
+
+                        {/* Render LinkedIn embed if type is "linkedin" */}
+                        {type === "linkedin" && (
+                            <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 p-6 border border-blue-200">
+                                <div className="flex items-center mb-4">
+                                    <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+                                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <div className="font-semibold text-blue-900">LinkedIn Post</div>
+                                        <div className="text-sm text-blue-700">Professional Network</div>
+                                    </div>
+                                </div>
+                                <div className="bg-white rounded-lg p-4 mb-4">
+                                    <p className="text-slate-700 mb-3">
+                                        {title || "LinkedIn Post"}
+                                    </p>
+                                    <a
+                                        href={link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 text-sm font-medium"
+                                    >
+                                        View on LinkedIn
+                                        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        )}                        {/* Render Instagram embed if type is "instagram" */}
+                        {type === "instagram" && (
+                            <div ref={instagramRef} className="rounded-2xl overflow-hidden">
+                                <blockquote 
+                                    className="instagram-media" 
+                                    data-instgrm-captioned 
+                                    data-instgrm-permalink={link}
+                                    data-instgrm-version="14" 
+                                    style={{
+                                        background: '#FFF',
+                                        border: 0,
+                                        borderRadius: '3px',
+                                        boxShadow: '0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15)',
+                                        margin: '1px',
+                                        maxWidth: '540px',
+                                        minWidth: '326px',
+                                        padding: 0,
+                                        width: '99.375%'
+                                    }}
+                                >
+                                    <div style={{ padding: '16px' }}>
+                                        <a 
+                                            href={link}
+                                            style={{
+                                                background: '#FFFFFF',
+                                                lineHeight: 0,
+                                                padding: '0 0',
+                                                textAlign: 'center' as const,
+                                                textDecoration: 'none',
+                                                width: '100%'
+                                            }}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                        </a>
+                                        <p style={{
+                                            color: '#c9c8cd',
+                                            fontFamily: 'Arial,sans-serif',
+                                            fontSize: '14px',
+                                            lineHeight: '17px',
+                                            marginBottom: 0,
+                                            marginTop: '8px',
+                                            overflow: 'hidden',
+                                            padding: '8px 0 7px',
+                                            textAlign: 'center' as const,
+                                            textOverflow: 'ellipsis',
+                                            whiteSpace: 'nowrap' as const
+                                        }}>
+                                            <a 
+                                                href={link}
+                                                style={{
+                                                    color: '#c9c8cd',
+                                                    fontFamily: 'Arial,sans-serif',
+                                                    fontSize: '14px',
+                                                    fontStyle: 'normal',
+                                                    fontWeight: 'normal',
+                                                    lineHeight: '17px',
+                                                    textDecoration: 'none'
+                                                }}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                {title || "View this post on Instagram"}
+                                            </a>
+                                        </p>
+                                    </div>
                                 </blockquote>
                             </div>
                         )}
