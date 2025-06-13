@@ -77,13 +77,12 @@ export function CreateContentModal({ open, onClose }: CreateContentModalProps) {
             // Refresh the page to show new content
             window.location.reload();
         } catch (error) {
-            console.error("Error adding content:", error);
-            toast.error("Error adding content. Please try again.", {
+            console.error("Error adding content:", error);            toast.error("Error adding content. Please try again.", {
                 duration: 4000,
                 style: {
                     background: '#ffffff',
                     color: '#334155',
-                    border: '1px solid #fecaca',
+                    border: '1px solid #e0f2fe',
                     borderRadius: '12px',
                     boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
                 },
