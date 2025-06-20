@@ -188,6 +188,43 @@ app.post("/api/v1/brain/share", middleware_1.userMiddleware, (req, res) => __awa
         });
     }
 }));
+// Get all active share links for a user (MUST BE BEFORE the :shareLink route)
+app.get("/api/v1/brain/shares", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        console.log("GET /api/v1/brain/shares called");
+        console.log("User ID from middleware:", req.userId);
+        // Since userId is unique in LinkModel, use findOne instead of find
+        const shareLink = yield db_1.LinkModel.findOne({
+            // @ts-ignore
+            userId: req.userId
+        }).populate("userId", "username");
+        console.log("Found share link:", shareLink);
+        if (!shareLink) {
+            console.log("No share link found for user:", req.userId);
+            res.json({
+                shareLinks: [],
+                message: "No active share links found"
+            });
+            return;
+        }
+        res.json({
+            shareLinks: [{
+                    id: shareLink._id,
+                    hash: shareLink.hash,
+                    createdAt: shareLink.createdAt || new Date(),
+                    shareUrl: `${req.protocol}://${req.get('host')}/share/${shareLink.hash}`
+                }],
+            message: "Share links retrieved successfully"
+        });
+    }
+    catch (error) {
+        console.error("Error fetching share links:", error);
+        res.status(500).json({
+            message: "Error fetching share links",
+            error: error instanceof Error ? error.message : "Unknown error"
+        });
+    }
+}));
 // getting the sharelink from the user and server
 app.get("/api/v1/brain/:shareLink", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

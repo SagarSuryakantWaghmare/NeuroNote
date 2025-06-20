@@ -19,7 +19,6 @@ declare global {
   }
 }
 
-
 interface ContentItem {
   _id: string;
   link: string;
@@ -30,13 +29,13 @@ interface ContentItem {
 }
 
 export function Dashboard() {
-
   const [modalOpen, setModalOpen] = useState(false);
-  // Check if we're on mobile for layout adjustments
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [contents, setContents] = useState<ContentItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState<"all" | "youtube" | "twitter" | "linkedin" | "instagram">("all");
+  const [isShared, setIsShared] = useState(false);
+  const [shareLoading, setShareLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
     const handleResize = () => {
@@ -86,15 +85,39 @@ export function Dashboard() {
     } finally {
       setLoading(false);
     }
-  };
-  useEffect(() => {
+  };  useEffect(() => {
     fetchUserContent();
+    checkShareStatus();
   }, [navigate]);
 
-  // Function to share content
-  const shareContent = async () => {
+  // Function to check if brain is currently shared
+  const checkShareStatus = async () => {
     try {
-      setLoading(true);
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      // We'll use the existing share endpoint to check status
+      const response = await axios.get('/api/v1/brain/shares', {
+        headers: {
+          Authorization: token
+        }
+      });
+
+      if (response.data && response.data.shareLinks && response.data.shareLinks.length > 0) {
+        setIsShared(true);
+      } else {
+        setIsShared(false);
+      }
+    } catch (error) {
+      console.error("Error checking share status:", error);
+      setIsShared(false);
+    }
+  };
+
+  // Toggle share functionality
+  const toggleShare = async () => {
+    try {
+      setShareLoading(true);
       const token = localStorage.getItem('token');
       
       if (!token) {
@@ -103,7 +126,7 @@ export function Dashboard() {
       }
       
       const response = await axios.post('/api/v1/brain/share', 
-        { share: true }, // Request body
+        { share: !isShared }, 
         {
           headers: {
             Authorization: token
@@ -111,11 +134,13 @@ export function Dashboard() {
         }
       );
       
-      if (response.data && response.data.hash) {
-        const shareUrl = `${window.location.origin}/share/${response.data.hash}`;        // Copy to clipboard
+      if (!isShared && response.data && response.data.hash) {
+        // Creating share link
+        const shareUrl = `${window.location.origin}/share/${response.data.hash}`;
+        
         try {
           await navigator.clipboard.writeText(shareUrl);
-          toast.success('Share brain link copied to clipboard!', {
+          toast.success('Brain shared! Link copied to clipboard!', {
             duration: 4000,
             style: {
               background: '#ffffff',
@@ -130,8 +155,7 @@ export function Dashboard() {
             },
           });
         } catch (clipboardError) {
-          // Fallback if clipboard API fails
-          toast.success(`Share brain link created: ${shareUrl}`, {
+          toast.success(`Brain shared! Link: ${shareUrl}`, {
             duration: 6000,
             style: {
               background: '#ffffff',
@@ -146,15 +170,32 @@ export function Dashboard() {
             },
           });
         }
-        
-        console.log("Share URL:", shareUrl);
+        setIsShared(true);
+      } else if (isShared) {
+        // Deleting share link
+        toast.success('Brain sharing disabled!', {
+          duration: 3000,
+          style: {
+            background: '#ffffff',
+            color: '#334155',
+            border: '1px solid #e0f2fe',
+            borderRadius: '12px',
+            boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+          },
+          iconTheme: {
+            primary: '#0ea5e9',
+            secondary: '#ffffff',
+          },
+        });
+        setIsShared(false);
       }
     } catch (error) {
-      console.error("Error sharing content:", error);
+      console.error("Error toggling share:", error);
       if (axios.isAxiosError(error) && error.response?.status === 401) {
         localStorage.removeItem('token');
-        navigate('/signin');      } else {
-        toast.error("Failed to create share link. Please try again.", {
+        navigate('/signin');
+      } else {
+        toast.error("Failed to update sharing status. Please try again.", {
           duration: 4000,
           style: {
             background: '#ffffff',
@@ -170,8 +211,9 @@ export function Dashboard() {
         });
       }
     } finally {
-      setLoading(false);
-    }  };
+      setShareLoading(false);
+    }
+  };
 
   console.log(contents);
 
@@ -254,8 +296,7 @@ export function Dashboard() {
                     </div>
                   )}
                 </div>
-                
-                {/* Action buttons with enhanced styling */}
+                  {/* Action buttons with enhanced styling */}
                 <div className="flex gap-3 md:gap-4">
                   <Button
                     onClick={() => { setModalOpen(true) }}
@@ -264,10 +305,11 @@ export function Dashboard() {
                     startIcon={<PlusIcon />}
                   />
                   <Button
-                    onClick={shareContent}
-                    variant="secondary"
-                    text="Share Brain"
+                    onClick={toggleShare}
+                    variant={isShared ? "success" : "secondary"}
+                    text={shareLoading ? "..." : (isShared ? "Brain Shared" : "Share Brain")}
                     startIcon={<ShareIcon />}
+                    disabled={shareLoading}
                   />
                 </div>
               </div>
