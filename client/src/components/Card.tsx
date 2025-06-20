@@ -68,39 +68,39 @@ export function Card({ title, link, type }: CardProps) {
                 window.instgrm.Embeds.process();
             }
         }
-    }, [link, type]);return (
+    }, [link, type]);    return (
         <div className="w-full">
-            {/* Card Container */}
-            <div className="group relative overflow-hidden bg-white/80 backdrop-blur-xl rounded-3xl border border-sky-100/50 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02]">
+            {/* Card Container with dynamic height */}
+            <div className="group relative overflow-hidden bg-white/80 backdrop-blur-xl rounded-3xl border border-sky-100/50 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] h-fit">
                 {/* Gradient overlay on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-sky-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
-                <div className="relative p-6">
+                <div className="relative p-4 md:p-6">
                     {/* Header Section */}
                     <div className="flex justify-between items-start mb-4">
                         {/* Left Section: Title with Icon */}
-                        <div className="flex items-center text-md max-w-[80%]">
-                            <div className="text-sky-600 pr-3 flex-shrink-0 group-hover:text-sky-700 transition-colors duration-300">
+                        <div className="flex items-center text-sm md:text-md max-w-[80%]">
+                            <div className="text-sky-600 pr-2 md:pr-3 flex-shrink-0 group-hover:text-sky-700 transition-colors duration-300">
                                 <ShareIcon />
                             </div>
-                            <div className="font-semibold text-slate-800 truncate group-hover:text-slate-900 transition-colors duration-300" title={title}>
+                            <div className="font-semibold text-slate-800 line-clamp-2 group-hover:text-slate-900 transition-colors duration-300" title={title}>
                                 {title}
                             </div>
                         </div>
                         
                         {/* Right Section: Links with Icons */}
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-1 md:space-x-2 flex-shrink-0">
                             <a
                                 href={link}
                                 target="_blank"
-                                className="p-2 rounded-xl text-sky-600 hover:text-sky-700 hover:bg-sky-50 transition-all duration-300 group/icon"
+                                className="p-1.5 md:p-2 rounded-xl text-sky-600 hover:text-sky-700 hover:bg-sky-50 transition-all duration-300 group/icon"
                                 title="Open original"
                             >
                                 <div className="transform group-hover/icon:scale-110 transition-transform duration-300">
                                     <ShareIcon />
                                 </div>
                             </a>
-                            <button className="p-2 rounded-xl text-sky-600 hover:text-sky-700 hover:bg-sky-50 transition-all duration-300 group/icon">
+                            <button className="p-1.5 md:p-2 rounded-xl text-sky-600 hover:text-sky-700 hover:bg-sky-50 transition-all duration-300 group/icon">
                                 <div className="transform group-hover/icon:scale-110 transition-transform duration-300">
                                     <ShareIcon />
                                 </div>
@@ -108,7 +108,7 @@ export function Card({ title, link, type }: CardProps) {
                         </div>
                     </div>
 
-                    {/* Content Section with modern styling */}
+                    {/* Content Section with dynamic sizing */}
                     <div className="relative overflow-hidden rounded-2xl">
                         {/* Render YouTube embed if type is "youtube" */}
                         {type === "youtube" && (
@@ -135,34 +135,32 @@ export function Card({ title, link, type }: CardProps) {
                                     <a href={link.replace("x.com", "twitter.com")}></a>
                                 </blockquote>
                             </div>
-                        )}
-
-                        {/* Render LinkedIn embed if type is "linkedin" */}
+                        )}                        {/* Render LinkedIn embed if type is "linkedin" */}
                         {type === "linkedin" && (
-                            <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 p-6 border border-blue-200">
-                                <div className="flex items-center mb-4">
-                                    <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
-                                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-blue-50 to-blue-100 p-3 md:p-4 border border-blue-200">
+                                <div className="flex items-center mb-3">
+                                    <div className="w-6 h-6 md:w-8 md:h-8 bg-blue-600 rounded-lg flex items-center justify-center mr-2 md:mr-3 flex-shrink-0">
+                                        <svg className="w-3 h-3 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
                                             <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                                         </svg>
                                     </div>
-                                    <div>
-                                        <div className="font-semibold text-blue-900">LinkedIn Post</div>
-                                        <div className="text-sm text-blue-700">Professional Network</div>
+                                    <div className="min-w-0 flex-1">
+                                        <div className="font-semibold text-blue-900 text-sm md:text-base">LinkedIn Post</div>
+                                        <div className="text-xs md:text-sm text-blue-700">Professional Network</div>
                                     </div>
                                 </div>
-                                <div className="bg-white rounded-lg p-4 mb-4">
-                                    <p className="text-slate-700 mb-3">
+                                <div className="bg-white rounded-lg p-3">
+                                    <p className="text-slate-700 text-sm md:text-base mb-3 line-clamp-3">
                                         {title || "LinkedIn Post"}
                                     </p>
                                     <a
                                         href={link}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 text-sm font-medium"
+                                        className="inline-flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200 text-xs md:text-sm font-medium"
                                     >
                                         View on LinkedIn
-                                        <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-3 h-3 md:w-4 md:h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                         </svg>
                                     </a>
@@ -170,7 +168,7 @@ export function Card({ title, link, type }: CardProps) {
                             </div>
                         )}                        {/* Render Instagram embed if type is "instagram" */}
                         {type === "instagram" && (
-                            <div ref={instagramRef} className="rounded-2xl overflow-hidden">
+                            <div ref={instagramRef} className="rounded-2xl overflow-hidden w-full">
                                 <blockquote 
                                     className="instagram-media" 
                                     data-instgrm-captioned 
@@ -179,16 +177,16 @@ export function Card({ title, link, type }: CardProps) {
                                     style={{
                                         background: '#FFF',
                                         border: 0,
-                                        borderRadius: '3px',
+                                        borderRadius: '12px',
                                         boxShadow: '0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15)',
-                                        margin: '1px',
-                                        maxWidth: '540px',
-                                        minWidth: '326px',
+                                        margin: 0,
+                                        maxWidth: '100%',
+                                        minWidth: '280px',
                                         padding: 0,
-                                        width: '99.375%'
+                                        width: '100%'
                                     }}
                                 >
-                                    <div style={{ padding: '16px' }}>
+                                    <div style={{ padding: '12px' }}>
                                         <a 
                                             href={link}
                                             style={{
@@ -197,7 +195,8 @@ export function Card({ title, link, type }: CardProps) {
                                                 padding: '0 0',
                                                 textAlign: 'center' as const,
                                                 textDecoration: 'none',
-                                                width: '100%'
+                                                width: '100%',
+                                                display: 'block'
                                             }}
                                             target="_blank"
                                             rel="noopener noreferrer"
@@ -206,12 +205,12 @@ export function Card({ title, link, type }: CardProps) {
                                         <p style={{
                                             color: '#c9c8cd',
                                             fontFamily: 'Arial,sans-serif',
-                                            fontSize: '14px',
-                                            lineHeight: '17px',
+                                            fontSize: '13px',
+                                            lineHeight: '16px',
                                             marginBottom: 0,
-                                            marginTop: '8px',
+                                            marginTop: '6px',
                                             overflow: 'hidden',
-                                            padding: '8px 0 7px',
+                                            padding: '6px 0 5px',
                                             textAlign: 'center' as const,
                                             textOverflow: 'ellipsis',
                                             whiteSpace: 'nowrap' as const
@@ -221,10 +220,10 @@ export function Card({ title, link, type }: CardProps) {
                                                 style={{
                                                     color: '#c9c8cd',
                                                     fontFamily: 'Arial,sans-serif',
-                                                    fontSize: '14px',
+                                                    fontSize: '13px',
                                                     fontStyle: 'normal',
                                                     fontWeight: 'normal',
-                                                    lineHeight: '17px',
+                                                    lineHeight: '16px',
                                                     textDecoration: 'none'
                                                 }}
                                                 target="_blank"
