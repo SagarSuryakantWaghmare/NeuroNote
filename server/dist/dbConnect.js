@@ -13,15 +13,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
+const config_1 = require("./config");
 const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // const conn=await mongoose.connect(process.env.MONGODB_URL as string);
-        // const conn=await mongoose.connect("mongodb+srv://sagarwaghmare1384:k5Pja5QmixtFSeDE@neuronote.3rfvhe8.mongodb.net/");
-        const conn = yield mongoose_1.default.connect("mongodb://localhost:27017/neuronote");
+        const conn = yield mongoose_1.default.connect(config_1.MONGODB_URL);
         console.log(`MongoDB Connected: ${conn.connection.host}`);
+        console.log(`Database: ${conn.connection.name}`);
     }
     catch (error) {
-        console.log(`Error: ${error.message}`);
+        console.log(`Database Connection Error: ${error.message}`);
         process.exit(1);
     }
 });
