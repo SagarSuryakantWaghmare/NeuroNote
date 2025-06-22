@@ -1,14 +1,15 @@
 import mongoose from 'mongoose';
+import { MONGODB_URL } from './config';
 
-const connectDB=async():Promise<void> =>{
-    try{
-        // const conn=await mongoose.connect(process.env.MONGODB_URL as string);
-        // const conn=await mongoose.connect("mongodb+srv://sagarwaghmare1384:k5Pja5QmixtFSeDE@neuronote.3rfvhe8.mongodb.net/");
-        const conn=await mongoose.connect("mongodb://localhost:27017/neuronote");
+const connectDB = async (): Promise<void> => {
+    try {
+        const conn = await mongoose.connect(MONGODB_URL);
         console.log(`MongoDB Connected: ${conn.connection.host}`);
-    }    catch(error){
-        console.log(`Error: ${(error as Error).message}`);
+        console.log(`Database: ${conn.connection.name}`);
+    } catch (error) {
+        console.log(`Database Connection Error: ${(error as Error).message}`);
         process.exit(1);
     }
 }
+
 export default connectDB;

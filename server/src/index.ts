@@ -3,16 +3,22 @@ import mongoose from 'mongoose';
 import { ContentModel, LinkModel, UserModel } from './db';
 import jwt from 'jsonwebtoken';
 import { JsonWebTokenError } from 'jsonwebtoken';
-import { JWT_PASSWORD } from './config';
+import { JWT_PASSWORD, PORT, FRONTEND_URL } from './config';
 import { userMiddleware } from './middleware';
 import { random } from './utils';
 import cors from 'cors';
 import connectDB from './dbConnect';
 
-// d.ts for the declation file
+// Initialize Express app
 const app = express();
+
+// CORS configuration for production
+app.use(cors({
+  origin: FRONTEND_URL,
+  credentials: true
+}));
+
 app.use(express.json());
-app.use(cors());
 
 app.post('/api/v1/signup', async (req, res) => {
     try {
@@ -293,13 +299,12 @@ app.get('/api/health', (req, res) => {
 });
 
 // Start the server with database connection
-const PORT = process.env.PORT || 3000;
-
 // Connect to MongoDB first, then start the server
 connectDB()
     .then(() => {
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
+            console.log(`Environment: ${process.env.NODE_ENV}`);
         });
     })
     .catch(err => {

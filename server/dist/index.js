@@ -20,10 +20,14 @@ const middleware_1 = require("./middleware");
 const utils_1 = require("./utils");
 const cors_1 = __importDefault(require("cors"));
 const dbConnect_1 = __importDefault(require("./dbConnect"));
-// d.ts for the declation file
+// Initialize Express app
 const app = (0, express_1.default)();
+// CORS configuration for production
+app.use((0, cors_1.default)({
+    origin: config_1.FRONTEND_URL,
+    credentials: true
+}));
 app.use(express_1.default.json());
-app.use((0, cors_1.default)());
 app.post('/api/v1/signup', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // Get username and password from request body
@@ -280,12 +284,12 @@ app.get('/api/health', (req, res) => {
     res.json({ status: 'ok', message: 'Server is running' });
 });
 // Start the server with database connection
-const PORT = process.env.PORT || 3000;
 // Connect to MongoDB first, then start the server
 (0, dbConnect_1.default)()
     .then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
+    app.listen(config_1.PORT, () => {
+        console.log(`Server is running on port ${config_1.PORT}`);
+        console.log(`Environment: ${process.env.NODE_ENV}`);
     });
 })
     .catch(err => {
