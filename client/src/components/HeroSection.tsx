@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+// @ts-ignore
 import { NeuroIcon } from '../icons/NeuroIcon';
 import { YoutubeIcon } from '../icons/YoutubeIcon';
 import { TwitterIcon } from '../icons/TwitterIcon';

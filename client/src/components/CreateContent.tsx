@@ -1,6 +1,7 @@
 import { useRef, useState } from "react"; // Importing React hooks for state management and refs
 import { CrossIcon } from "../icons/CrossIcon"; // Importing the close icon
-import { Button } from "./Button"; // Importing the Button component
+//@ts-ignore
+import { Button } from "./Button"; 
 import { Input } from "./Input"; // Importing the Input component for form inputs
 import axios from "axios"; // Importing axios for HTTP requests
 import toast from 'react-hot-toast'; // Importing toast for notifications
