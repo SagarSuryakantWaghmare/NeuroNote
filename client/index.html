@@ -2,10 +2,88 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo.png" />
+    
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/logo.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/logo.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/logo.png" />
+    
+    <!-- Viewport and Mobile Optimization -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    
+    <!-- App Meta Information -->
+    <meta name="application-name" content="NeuroNote" />
+    <meta name="apple-mobile-web-app-title" content="NeuroNote" />
+    <meta name="description" content="NeuroNote - Your Second Brain for organizing and managing digital content from YouTube, Twitter, LinkedIn, and Instagram. Save, organize, and share your knowledge seamlessly." />
+    <meta name="keywords" content="second brain, content management, knowledge base, digital organization, YouTube, Twitter, LinkedIn, Instagram, note taking, productivity" />
+    <meta name="author" content="NeuroNote Team" />
+    <meta name="theme-color" content="#0ea5e9" />
+    <meta name="msapplication-TileColor" content="#0ea5e9" />
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="NeuroNote" />
+    <meta property="og:title" content="NeuroNote - Your Second Brain" />
+    <meta property="og:description" content="Organize and manage your digital content from multiple platforms in one centralized location. Your personal knowledge management system." />
+    <meta property="og:image" content="/logo.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="NeuroNote - Your Second Brain Logo" />
+    <meta property="og:url" content="https://neuronote.vercel.app" />
+    <meta property="og:locale" content="en_US" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@NeuroNote" />
+    <meta name="twitter:creator" content="@NeuroNote" />
+    <meta name="twitter:title" content="NeuroNote - Your Second Brain" />
+    <meta name="twitter:description" content="Organize and manage your digital content from YouTube, Twitter, LinkedIn, and Instagram in one place." />
+    <meta name="twitter:image" content="/logo.png" />
+    <meta name="twitter:image:alt" content="NeuroNote - Your Second Brain" />
+    
+    <!-- PWA and Web App Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- SEO and Indexing -->
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="revisit-after" content="7 days" />
+    
+    <!-- Performance and Security -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    
+    <!-- External Scripts -->
     <script async src="https://platform.twitter.com/widgets.js" charset="UTF-8"></script>
-    <title>Vite + React + TS</title>
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "NeuroNote",
+      "description": "Your Second Brain for organizing and managing digital content from multiple platforms",
+      "url": "https://neuronote.vercel.app",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "NeuroNote Team"
+      }
+    }
+    </script>
+    
+    <title>NeuroNote - Your Second Brain | Digital Content Management</title>
   </head>
   <body>
     <div id="root"></div>
