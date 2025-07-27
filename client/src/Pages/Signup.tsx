@@ -6,8 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { API_BASE_URL } from "../config";
 
 export function Signup() {
-    console.log('API_BASE_URL:', API_BASE_URL);
-    console.log('Making request to:', `${API_BASE_URL}/signup`);
+
     const usernameRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -17,6 +16,8 @@ export function Signup() {
             setIsLoading(true);
             const username = usernameRef.current?.value;
             const password = passwordRef.current?.value;
+            console.log('API_BASE_URL:', API_BASE_URL);
+            console.log('Making request to:', `${API_BASE_URL}/signup`);
 
             if (!username || !password) {
                 toast.error("Please enter both username and password");
