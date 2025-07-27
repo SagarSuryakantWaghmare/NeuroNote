@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { ContentModel, LinkModel, UserModel } from './db';
 import jwt from 'jsonwebtoken';
@@ -20,7 +20,7 @@ app.use(cors({
 
 app.use(express.json());
 
-app.post('/api/v1/signup', async (req, res) => {
+app.post('/api/v1/signup', async (req: Request, res: Response) => {
     try {
         // Get username and password from request body
         const { username, password } = req.body;
@@ -68,7 +68,7 @@ app.post('/api/v1/signup', async (req, res) => {
 })
 
 // Sign In
-app.post('/api/v1/signin', async (req, res) => {
+app.post('/api/v1/signin', async (req: Request, res: Response) => {
     const username = req.body.username;
     const password = req.body.password;
     const existingUser = await UserModel.findOne({
@@ -91,7 +91,7 @@ app.post('/api/v1/signin', async (req, res) => {
 })
 
 // Content api
-app.post("/api/v1/content", userMiddleware, async (req, res) => {
+app.post("/api/v1/content", userMiddleware, async (req: Request, res: Response) => {
     try {
         const link=req.body.link;
         const title=req.body.title;
@@ -121,7 +121,7 @@ app.post("/api/v1/content", userMiddleware, async (req, res) => {
 })
 
 // Give content
-app.get("/api/v1/content", userMiddleware, async (req, res) => {
+app.get("/api/v1/content", userMiddleware, async (req: Request, res: Response) => {
     // @ts-ignore
     const userId = req.userId;
     const content = await ContentModel.find({
@@ -135,7 +135,7 @@ app.get("/api/v1/content", userMiddleware, async (req, res) => {
 })
 
 // Delete content
-app.delete("/api/v1/content", userMiddleware, async (req, res) => {
+app.delete("/api/v1/content", userMiddleware, async (req: Request, res: Response) => {
     const contentId = req.body.contentId;
     await ContentModel.deleteMany({
         contentId,
@@ -148,7 +148,7 @@ app.delete("/api/v1/content", userMiddleware, async (req, res) => {
 })
 
 // Sharing to the other user
-app.post("/api/v1/brain/share", userMiddleware, async (req, res) => {
+app.post("/api/v1/brain/share", userMiddleware, async (req: Request, res: Response) => {
     try {
         const share = req.body.share;
         
@@ -199,7 +199,7 @@ app.post("/api/v1/brain/share", userMiddleware, async (req, res) => {
 })
 
 // Get all active share links for a user (MUST BE BEFORE the :shareLink route)
-app.get("/api/v1/brain/shares", userMiddleware, async (req, res) => {
+app.get("/api/v1/brain/shares", userMiddleware, async (req: Request, res: Response) => {
     try {
         console.log("GET /api/v1/brain/shares called");
         console.log("User ID from middleware:", req.userId);
@@ -240,7 +240,7 @@ app.get("/api/v1/brain/shares", userMiddleware, async (req, res) => {
 })
 
 // getting the sharelink from the user and server
-app.get("/api/v1/brain/:shareLink", async (req, res) => {
+app.get("/api/v1/brain/:shareLink", async (req: Request, res: Response) => {
     try {
         const hash = req.params.shareLink;
         if (!hash) {
@@ -294,7 +294,7 @@ app.get("/api/v1/brain/:shareLink", async (req, res) => {
     }
 })
 // Add health check endpoint
-app.get('/api/health', (req, res) => {
+app.get('/api/health', (req: Request, res: Response) => {
     res.json({ status: 'ok', message: 'Server is running' });
 });
 
