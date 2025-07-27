@@ -3,24 +3,27 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { NeuroIcon } from "../icons/NeuroIcon";
 import toast, { Toaster } from 'react-hot-toast';
+import { API_BASE_URL } from "../config";
 
 export function Signup() {
+    console.log('API_BASE_URL:', API_BASE_URL);
+    console.log('Making request to:', `${API_BASE_URL}/signup`);
     const usernameRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate();async function handleSignup() {
+    const navigate = useNavigate(); async function handleSignup() {
         try {
             setIsLoading(true);
             const username = usernameRef.current?.value;
             const password = passwordRef.current?.value;
-            
+
             if (!username || !password) {
                 toast.error("Please enter both username and password");
                 setIsLoading(false);
                 return;
             }
-            
+
             console.log("Sending signup request with:", { username, password });
             const response = await axios({
                 method: 'post',
@@ -30,21 +33,21 @@ export function Signup() {
                     'Content-Type': 'application/json',
                 }
             });
-            
+
             console.log("Signup response:", response.data);
             toast.success("Account created successfully! Redirecting to sign in...");
 
             // Reset form and navigate to sign in
             if (usernameRef.current) usernameRef.current.value = "";
             if (passwordRef.current) passwordRef.current.value = "";
-            
+
             // Navigate to sign in page after successful signup with delay
             setTimeout(() => {
                 navigate('/signin');
             }, 1500);
         } catch (error: any) {
             console.error("Signup error:", error);
-            
+
             // More specific error handling
             if (error.response?.status === 409) {
                 toast.error("Username already exists. Please choose a different one.");
@@ -56,9 +59,9 @@ export function Signup() {
         } finally {
             setIsLoading(false);
         }
-    }      return (
+    } return (
         <div className="min-h-screen bg-gradient-to-br from-sky-50 via-blue-50 to-cyan-50 flex items-center justify-center p-6">
-            <Toaster 
+            <Toaster
                 position="top-center"
                 toastOptions={{
                     duration: 4000,
@@ -111,7 +114,7 @@ export function Signup() {
                                 className="w-full px-4 py-3 border border-sky-200 rounded-xl focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all duration-200 bg-sky-50/50"
                             />
                         </div>
-                          <div>
+                        <div>
                             <label className="block text-sm font-medium text-slate-700 mb-2">
                                 Password
                             </label>
@@ -159,8 +162,8 @@ export function Signup() {
                         <div className="text-center">
                             <p className="text-slate-600">
                                 Already have an account?{' '}
-                                <Link 
-                                    to="/signin" 
+                                <Link
+                                    to="/signin"
                                     className="text-sky-600 hover:text-sky-700 font-medium transition-colors"
                                 >
                                     Sign in
@@ -197,8 +200,8 @@ export function Signup() {
 
                 {/* Footer */}
                 <div className="text-center mt-8">
-                    <Link 
-                        to="/" 
+                    <Link
+                        to="/"
                         className="text-slate-500 hover:text-sky-600 transition-colors text-sm"
                     >
                         ← Back to Home
