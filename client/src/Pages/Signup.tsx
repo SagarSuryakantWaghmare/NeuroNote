@@ -47,6 +47,8 @@ export function Signup() {
                 navigate('/signin');
             }, 1500);
         } catch (error: any) {
+            console.log('API_BASE_URL:', API_BASE_URL);
+            console.log('Making request to:', `${API_BASE_URL}/signup`);
             console.error("Signup error:", error);
 
             // More specific error handling
