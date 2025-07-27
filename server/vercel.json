@@ -12,6 +12,11 @@
       "dest": "dist/index.js"
     }
   ],
+  "functions": {
+    "dist/index.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
   "env": {
     "MONGODB_URL": "@mongodb_url",
     "JWT_PASSWORD": "@jwt_password",

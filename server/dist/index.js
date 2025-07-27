@@ -16,7 +16,7 @@ const express_1 = __importDefault(require("express"));
 const db_1 = require("./db");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = require("./config");
-const middleware_1 = require("./middleware");
+const auth_1 = require("./auth");
 const utils_1 = require("./utils");
 const cors_1 = __importDefault(require("cors"));
 const dbConnect_1 = __importDefault(require("./dbConnect"));
@@ -94,7 +94,7 @@ app.post('/api/v1/signin', (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 }));
 // Content api
-app.post("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/api/v1/content", auth_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const link = req.body.link;
         const title = req.body.title;
@@ -122,7 +122,7 @@ app.post("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter
     }
 }));
 // Give content
-app.get("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get("/api/v1/content", auth_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // @ts-ignore
     const userId = req.userId;
     const content = yield db_1.ContentModel.find({
@@ -134,7 +134,7 @@ app.get("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(
     });
 }));
 // Delete content
-app.delete("/api/v1/content", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.delete("/api/v1/content", auth_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const contentId = req.body.contentId;
     yield db_1.ContentModel.deleteMany({
         contentId,
@@ -146,7 +146,7 @@ app.delete("/api/v1/content", middleware_1.userMiddleware, (req, res) => __await
     });
 }));
 // Sharing to the other user
-app.post("/api/v1/brain/share", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.post("/api/v1/brain/share", auth_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const share = req.body.share;
         if (share) {
@@ -193,7 +193,7 @@ app.post("/api/v1/brain/share", middleware_1.userMiddleware, (req, res) => __awa
     }
 }));
 // Get all active share links for a user (MUST BE BEFORE the :shareLink route)
-app.get("/api/v1/brain/shares", middleware_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.get("/api/v1/brain/shares", auth_1.userMiddleware, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         console.log("GET /api/v1/brain/shares called");
         console.log("User ID from middleware:", req.userId);

@@ -4,7 +4,7 @@ import { ContentModel, LinkModel, UserModel } from './db';
 import jwt from 'jsonwebtoken';
 import { JsonWebTokenError } from 'jsonwebtoken';
 import { JWT_PASSWORD, PORT, FRONTEND_URL } from './config';
-import { userMiddleware } from './middleware';
+import { userMiddleware } from './auth';
 import { random } from './utils';
 import cors from 'cors';
 import connectDB from './dbConnect';
